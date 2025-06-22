@@ -1,236 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, TrendingUp, ChevronDown } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-import Button from '../ui/Button';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 
-const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const location = useLocation();
+// Import all pages
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Courses from './pages/Courses';
+import Mentorship from './pages/Mentorship';
+import Contact from './pages/Contact';
+import Booking from './pages/Booking';
+import MarketAnalysis from './pages/MarketAnalysis';
+import TradingCalculators from './pages/TradingCalculators';
+import Blog from './pages/Blog';
+import EducationalBlog from './pages/EducationalBlog';
+import TradingStrategies from './pages/TradingStrategies';
+import RiskManagement from './pages/RiskManagement';
+import Certifications from './pages/Certifications';
+import DailyTradingSignals from './pages/DailyTradingSignals';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Refund from './pages/Refund';
+import Disclaimer from './pages/Disclaimer';
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const servicesDropdownItems = [
-    { name: 'All Services', path: '/services' },
-    { name: 'Market Analysis Tools', path: '/market-analysis' },
-    { name: 'Trading Calculators', path: '/trading-calculators' },
-    { name: 'Trading Strategies', path: '/trading-strategies' },
-    { name: 'Risk Management', path: '/risk-management' },
-    { name: 'Educational Blog', path: '/educational-blog' },
-    { name: 'Certifications', path: '/certifications' }
-  ];
-
+function App() {
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/95 backdrop-blur-sm py-4'
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <div className="bg-gradient-to-r from-blue-900 to-blue-700 p-2 rounded-lg mr-3">
-            <TrendingUp className="text-yellow-500" size={24} />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold text-xl text-blue-900">Gary Robinson</span>
-            <span className="text-sm text-gray-600 -mt-1">Trading</span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link 
-            to="/" 
-            className={`font-medium transition-colors ${
-              location.pathname === '/' ? 'text-blue-900' : 'text-gray-800 hover:text-blue-900'
-            }`}
-          >
-            Home
-          </Link>
-          <Link 
-            to="/about" 
-            className={`font-medium transition-colors ${
-              location.pathname === '/about' ? 'text-blue-900' : 'text-gray-800 hover:text-blue-900'
-            }`}
-          >
-            About
-          </Link>
-          
-          {/* Services Dropdown */}
-          <div 
-            className="relative"
-            onMouseEnter={() => setIsServicesOpen(true)}
-            onMouseLeave={() => setIsServicesOpen(false)}
-          >
-            <button className="font-medium text-gray-800 hover:text-blue-900 transition-colors flex items-center">
-              Services
-              <ChevronDown className="ml-1" size={16} />
-            </button>
-            
-            {isServicesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
-                {servicesDropdownItems.map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item.path}
-                    className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-          
-          <Link 
-            to="/courses" 
-            className={`font-medium transition-colors ${
-              location.pathname === '/courses' ? 'text-blue-900' : 'text-gray-800 hover:text-blue-900'
-            }`}
-          >
-            Courses
-          </Link>
-          <Link 
-            to="/mentorship" 
-            className={`font-medium transition-colors ${
-              location.pathname === '/mentorship' ? 'text-blue-900' : 'text-gray-800 hover:text-blue-900'
-            }`}
-          >
-            Mentorship
-          </Link>
-          <Link 
-            to="/blog" 
-            className={`font-medium transition-colors ${
-              location.pathname === '/blog' ? 'text-blue-900' : 'text-gray-800 hover:text-blue-900'
-            }`}
-          >
-            Blog
-          </Link>
-          <Link 
-            to="/contact" 
-            className={`font-medium transition-colors ${
-              location.pathname === '/contact' ? 'text-blue-900' : 'text-gray-800 hover:text-blue-900'
-            }`}
-          >
-            Contact
-          </Link>
-          <Link to="/booking">
-            <Button variant="secondary">
-              Book Session
-            </Button>
-          </Link>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="text-gray-800\" size={24} />
-          ) : (
-            <Menu className="text-gray-800" size={24} />
-          )}
-        </button>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/mentorship" element={<Mentorship />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/market-analysis" element={<MarketAnalysis />} />
+            <Route path="/trading-calculators" element={<TradingCalculators />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/educational-blog" element={<EducationalBlog />} />
+            <Route path="/trading-strategies" element={<TradingStrategies />} />
+            <Route path="/risk-management" element={<RiskManagement />} />
+            <Route path="/certifications" element={<Certifications />} />
+            <Route path="/daily-trading-signals" element={<DailyTradingSignals />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
+          </Routes>
+        </main>
+        
+        <Footer />
       </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white absolute top-full left-0 w-full shadow-md border-t">
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className="font-medium text-gray-800 hover:text-blue-900 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/about" 
-              className="font-medium text-gray-800 hover:text-blue-900 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-            
-            {/* Mobile Services Menu */}
-            <div>
-              <button 
-                className="font-medium text-gray-800 hover:text-blue-900 transition-colors flex items-center w-full text-left"
-                onClick={() => setIsServicesOpen(!isServicesOpen)}
-              >
-                Services
-                <ChevronDown className={`ml-1 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} size={16} />
-              </button>
-              {isServicesOpen && (
-                <div className="ml-4 mt-2 space-y-2">
-                  {servicesDropdownItems.map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.path}
-                      className="block text-gray-600 hover:text-blue-900 transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-            
-            <Link 
-              to="/courses" 
-              className="font-medium text-gray-800 hover:text-blue-900 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Courses
-            </Link>
-            <Link 
-              to="/mentorship" 
-              className="font-medium text-gray-800 hover:text-blue-900 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Mentorship
-            </Link>
-            <Link 
-              to="/blog" 
-              className="font-medium text-gray-800 hover:text-blue-900 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Blog
-            </Link>
-            <Link 
-              to="/contact" 
-              className="font-medium text-gray-800 hover:text-blue-900 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </Link>
-            <Link to="/booking" onClick={() => setIsMenuOpen(false)}>
-              <Button 
-                variant="secondary"
-                fullWidth
-              >
-                Book Session
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
-    </header>
+    </Router>
   );
-};
+}
 
-export default Header;
+export default App;
