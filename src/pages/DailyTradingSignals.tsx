@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import { TrendingUp, TrendingDown, Clock, Target, Star, CheckCircle, Users, BarChart3, Signal, Bell, Download, Play } from 'lucide-react';
 import Button from '../components/ui/Button';
+import PaymentModal from '../components/payment/PaymentModal';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  type: 'course' | 'mentorship' | 'consultation';
+}
 
 const DailyTradingSignals = () => {
   const [selectedPackage, setSelectedPackage] = useState('premium');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const signalPackages = [
     {
-      id: 'basic',
+      id: 'basic-signals',
       name: "Basic Signals",
       price: 97,
       period: "per month",
@@ -29,7 +40,7 @@ const DailyTradingSignals = () => {
       popular: false
     },
     {
-      id: 'premium',
+      id: 'premium-signals',
       name: "Premium Signals",
       price: 197,
       period: "per month",
@@ -53,7 +64,7 @@ const DailyTradingSignals = () => {
       popular: true
     },
     {
-      id: 'vip',
+      id: 'vip-signals',
       name: "VIP Signals",
       price: 397,
       period: "per month",
@@ -165,8 +176,20 @@ const DailyTradingSignals = () => {
     }
   ];
 
-  const handlePurchase = (packageName, price) => {
-    alert(`Redirecting to Stripe checkout for ${packageName} - £${price}/month`);
+  const handlePurchase = (pkg: any) => {
+    setSelectedProduct({
+      id: pkg.id,
+      name: pkg.name,
+      price: pkg.price,
+      description: pkg.description,
+      type: 'course'
+    });
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
   };
 
   return (
@@ -343,9 +366,9 @@ const DailyTradingSignals = () => {
                     variant={pkg.popular ? "secondary" : "primary"}
                     fullWidth
                     size="lg"
-                    onClick={() => handlePurchase(pkg.name, pkg.price)}
+                    onClick={() => handlePurchase(pkg)}
                   >
-                    Start Receiving Signals - £{pkg.price}
+                    Buy Now - £{pkg.price}
                   </Button>
                   
                   <p className="text-xs text-gray-500 text-center mt-3">
@@ -487,7 +510,11 @@ const DailyTradingSignals = () => {
               Join hundreds of successful traders who rely on Gary's signals for consistent profits and continuous learning.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
+              <Button 
+                variant="secondary" 
+                size="lg"
+                onClick={() => handlePurchase(signalPackages.find(pkg => pkg.id === 'premium-signals'))}
+              >
                 Start 7-Day Free Trial
               </Button>
               <Button 
@@ -506,6 +533,13 @@ const DailyTradingSignals = () => {
           </div>
         </div>
       </section>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </div>
   );
 };

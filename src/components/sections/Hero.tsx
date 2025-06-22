@@ -1,8 +1,28 @@
 import React from 'react';
 import Button from '../ui/Button';
 import { TrendingUp, Award, Users, Clock, BarChart3, DollarSign } from 'lucide-react';
+import PaymentModal from '../payment/PaymentModal';
 
 const Hero = () => {
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
+
+  const handleConsultation = () => {
+    setSelectedProduct({
+      id: 'free-consultation',
+      name: 'Free Trading Consultation',
+      price: 0,
+      description: 'One-on-one consultation to discuss your trading goals and challenges',
+      type: 'consultation'
+    });
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <section id="home" className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white relative overflow-hidden">
       {/* Background Pattern */}
@@ -41,7 +61,7 @@ const Hero = () => {
                 variant="outline" 
                 size="lg"
                 className="border-white text-white hover:bg-white hover:text-blue-900"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={handleConsultation}
               >
                 Free Consultation
               </Button>
@@ -121,6 +141,13 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </section>
   );
 };

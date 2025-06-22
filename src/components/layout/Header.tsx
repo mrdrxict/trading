@@ -34,6 +34,7 @@ const Header = () => {
         { name: 'All Services', path: '/services' },
         { name: 'Courses', path: '/courses' },
         { name: 'Mentorship', path: '/mentorship' },
+        { name: 'Daily Trading Signals', path: '/daily-trading-signals' },
         { name: 'Market Analysis', path: '/market-analysis' },
         { name: 'Trading Calculators', path: '/trading-calculators' },
       ]
@@ -47,7 +48,6 @@ const Header = () => {
         { name: 'Educational Blog', path: '/educational-blog' },
         { name: 'Trading Strategies', path: '/trading-strategies' },
         { name: 'Risk Management', path: '/risk-management' },
-        { name: 'Daily Trading Signals', path: '/daily-trading-signals' },
         { name: 'Certifications', path: '/certifications' },
       ]
     },
@@ -55,7 +55,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
+    <header className="bg-white shadow-lg z-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}

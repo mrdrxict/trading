@@ -59,7 +59,7 @@ const Footer = () => {
               <li><Link to="/trading-strategies" className="text-gray-300 hover:text-yellow-500 transition-colors">Trading Strategies</Link></li>
               <li><Link to="/risk-management" className="text-gray-300 hover:text-yellow-500 transition-colors">Risk Management</Link></li>
               <li><Link to="/educational-blog" className="text-gray-300 hover:text-yellow-500 transition-colors">Educational Blog</Link></li>
-              <li><Link to="/certifications" className="text-gray-300 hover:text-yellow-500 transition-colors">Certifications</Link></li>
+              <li><Link to="/daily-trading-signals" className="text-gray-300 hover:text-yellow-500 transition-colors">Daily Trading Signals</Link></li>
             </ul>
           </div>
 
@@ -80,20 +80,20 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Contact</h3>
             <ul className="space-y-2">
-              <li className="flex items-center">
-                <Mail size={16} className="mr-2 text-yellow-500" />
+              <li className="flex items-start">
+                <Mail className="text-yellow-500 mr-2" size={16} />
                 <a href="mailto:gary@garyrobinsontrading.com" className="text-gray-300 hover:text-yellow-500 transition-colors">
                   gary@garyrobinsontrading.com
                 </a>
               </li>
-              <li className="flex items-center">
-                <Phone size={16} className="mr-2 text-yellow-500" />
+              <li className="flex items-start">
+                <Phone className="text-yellow-500 mr-2" size={16} />
                 <a href="tel:+442071234567" className="text-gray-300 hover:text-yellow-500 transition-colors">
                   +44 20 7123 4567
                 </a>
               </li>
               <li className="flex items-start">
-                <MapPin size={16} className="mr-2 text-yellow-500 mt-1" />
+                <MapPin className="text-yellow-500 mr-2 mt-1" size={16} />
                 <span className="text-gray-300">
                   London, UK<br />United Kingdom
                 </span>
