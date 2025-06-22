@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import { Check, Star, Clock, Users, BookOpen, Award, Play, Download, Target, TrendingUp } from 'lucide-react';
 import Button from '../components/ui/Button';
+import PaymentModal from '../components/payment/PaymentModal';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  type: 'course' | 'mentorship' | 'consultation';
+}
 
 const Courses = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const categories = [
     { id: 'all', name: 'All Courses', count: 6 },
@@ -14,7 +25,7 @@ const Courses = () => {
 
   const courses = [
     {
-      id: 1,
+      id: 'forex-fundamentals',
       name: "Forex Trading Fundamentals",
       category: "beginner",
       price: 497,
@@ -73,7 +84,7 @@ const Courses = () => {
       popular: false
     },
     {
-      id: 2,
+      id: 'crypto-trading-mastery',
       name: "Cryptocurrency Trading Mastery",
       category: "beginner",
       price: 597,
@@ -132,7 +143,7 @@ const Courses = () => {
       popular: false
     },
     {
-      id: 3,
+      id: 'advanced-technical-analysis',
       name: "Advanced Technical Analysis",
       category: "intermediate",
       price: 897,
@@ -191,7 +202,7 @@ const Courses = () => {
       popular: true
     },
     {
-      id: 4,
+      id: 'futures-trading-strategies',
       name: "Futures Trading Strategies",
       category: "intermediate",
       price: 997,
@@ -250,7 +261,7 @@ const Courses = () => {
       popular: false
     },
     {
-      id: 5,
+      id: 'professional-trading-psychology',
       name: "Professional Trading Psychology",
       category: "advanced",
       price: 1197,
@@ -309,7 +320,7 @@ const Courses = () => {
       popular: false
     },
     {
-      id: 6,
+      id: 'algorithmic-trading-development',
       name: "Algorithmic Trading Development",
       category: "advanced",
       price: 1497,
@@ -373,8 +384,20 @@ const Courses = () => {
     ? courses 
     : courses.filter(course => course.category === selectedCategory);
 
-  const handlePurchase = (courseName, price) => {
-    alert(`Redirecting to Stripe checkout for ${courseName} - £${price}`);
+  const handlePurchase = (course: any) => {
+    setSelectedProduct({
+      id: course.id,
+      name: course.name,
+      price: course.price,
+      description: course.description,
+      type: 'course'
+    });
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
   };
 
   return (
@@ -560,9 +583,9 @@ const Courses = () => {
                       variant={course.popular ? "secondary" : "primary"}
                       fullWidth
                       size="lg"
-                      onClick={() => handlePurchase(course.name, course.price)}
+                      onClick={() => handlePurchase(course)}
                     >
-                      Enroll Now - £{course.price}
+                      Buy Now - £{course.price}
                     </Button>
                     <Button variant="outline">
                       <Play className="mr-2" size={16} />
@@ -657,8 +680,18 @@ const Courses = () => {
               Join thousands of successful traders who have transformed their financial future with our comprehensive courses.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
-                Browse All Courses
+              <Button 
+                variant="secondary" 
+                size="lg"
+                onClick={() => handlePurchase({
+                  id: 'beginner-bundle',
+                  name: 'Beginner Trading Bundle',
+                  price: 997,
+                  description: 'Complete beginner package with all essential trading courses',
+                  type: 'course'
+                })}
+              >
+                Get Started Now
               </Button>
               <Button 
                 variant="outline" 
@@ -671,6 +704,13 @@ const Courses = () => {
           </div>
         </div>
       </section>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </div>
   );
 };

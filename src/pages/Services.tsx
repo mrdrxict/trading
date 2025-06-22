@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TrendingUp, BarChart3, Bitcoin, DollarSign, Globe, Target, Users, Clock, Award, CheckCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
+import PaymentModal from '../components/payment/PaymentModal';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  type: 'course' | 'mentorship' | 'consultation';
+}
 
 const Services = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
   const mainServices = [
     {
+      id: 'forex-education',
       icon: <DollarSign className="text-yellow-500" size={48} />,
       title: "Forex Trading Education",
       description: "Master the world's largest financial market with comprehensive currency trading strategies and analysis techniques.",
@@ -23,9 +36,10 @@ const Services = () => {
         "Multiple trading strategies"
       ],
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "From £797"
+      price: 797
     },
     {
+      id: 'futures-mastery',
       icon: <BarChart3 className="text-yellow-500" size={48} />,
       title: "Futures Trading Mastery",
       description: "Learn to trade commodities, indices, and financial futures with professional institutional techniques.",
@@ -44,9 +58,10 @@ const Services = () => {
         "Diverse asset exposure"
       ],
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "From £797"
+      price: 797
     },
     {
+      id: 'crypto-trading',
       icon: <Bitcoin className="text-yellow-500" size={48} />,
       title: "Cryptocurrency Trading",
       description: "Navigate the volatile crypto markets with proven strategies, risk management, and technical analysis.",
@@ -65,45 +80,50 @@ const Services = () => {
         "Decentralized finance access"
       ],
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: "From £797"
+      price: 797
     }
   ];
 
   const additionalServices = [
     {
+      id: 'personal-mentorship',
       icon: <Users className="text-blue-900" size={32} />,
       title: "Personal Mentorship",
       description: "One-on-one coaching with Gary Robinson for accelerated learning and personalized strategy development.",
       features: ["1-on-1 Sessions", "Custom Strategies", "Performance Review", "Direct Access"],
-      price: "From £499/month"
+      price: 499
     },
     {
+      id: 'trading-room',
       icon: <Globe className="text-blue-900" size={32} />,
       title: "Trading Room Access",
       description: "Join live trading sessions and see professional strategies in action with real-time market analysis.",
       features: ["Live Trading", "Real-time Analysis", "Q&A Sessions", "Community Access"],
-      price: "£199/month"
+      price: 199
     },
     {
+      id: 'strategy-development',
       icon: <Target className="text-blue-900" size={32} />,
       title: "Strategy Development",
       description: "Custom trading strategy creation based on your risk tolerance, capital, and trading goals.",
       features: ["Custom Strategies", "Backtesting", "Optimization", "Implementation Guide"],
-      price: "£1,997 one-time"
+      price: 1997
     },
     {
+      id: 'certification',
       icon: <Award className="text-blue-900" size={32} />,
       title: "Certification Program",
       description: "Earn professional trading certification recognized by industry professionals and institutions.",
       features: ["Comprehensive Curriculum", "Practical Exams", "Industry Recognition", "Continuing Education"],
-      price: "£2,997"
+      price: 2997
     }
   ];
 
   const servicePackages = [
     {
+      id: 'starter-package',
       name: "Starter Package",
-      price: "£797",
+      price: 797,
       description: "Perfect for beginners starting their trading journey",
       includes: [
         "Forex Trading Fundamentals",
@@ -116,8 +136,9 @@ const Services = () => {
       popular: false
     },
     {
+      id: 'professional-package',
       name: "Professional Package",
-      price: "£1,597",
+      price: 1597,
       description: "Comprehensive training for serious traders",
       includes: [
         "All Starter Package Content",
@@ -131,8 +152,9 @@ const Services = () => {
       popular: true
     },
     {
+      id: 'elite-package',
       name: "Elite Package",
-      price: "£2,397",
+      price: 2397,
       description: "Complete mastery program with personal mentorship",
       includes: [
         "All Professional Package Content",
@@ -146,6 +168,16 @@ const Services = () => {
       popular: false
     }
   ];
+
+  const handleBuyNow = (product: Product) => {
+    setSelectedProduct(product);
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
+  };
 
   return (
     <div className="pt-24">
@@ -194,7 +226,7 @@ const Services = () => {
 
           <div className="space-y-16">
             {mainServices.map((service, index) => (
-              <div key={index} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+              <div key={service.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                 <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                   <div className="relative h-96 rounded-2xl overflow-hidden shadow-xl">
                     <img 
@@ -206,7 +238,7 @@ const Services = () => {
                       {service.icon}
                     </div>
                     <div className="absolute bottom-4 right-4 bg-yellow-500 text-blue-900 px-4 py-2 rounded-lg font-bold">
-                      {service.price}
+                      £{service.price}
                     </div>
                   </div>
                 </div>
@@ -240,11 +272,21 @@ const Services = () => {
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button variant="secondary" size="lg">
-                      Learn More
+                    <Button 
+                      variant="secondary" 
+                      size="lg"
+                      onClick={() => handleBuyNow({
+                        id: service.id,
+                        name: service.title,
+                        price: service.price,
+                        description: service.description,
+                        type: 'course'
+                      })}
+                    >
+                      Buy Now - £{service.price}
                     </Button>
                     <Button variant="outline" size="lg">
-                      Free Consultation
+                      Learn More
                     </Button>
                   </div>
                 </div>
@@ -268,8 +310,8 @@ const Services = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {additionalServices.map((service, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            {additionalServices.map((service) => (
+              <div key={service.id} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
                   {service.icon}
                 </div>
@@ -290,9 +332,20 @@ const Services = () => {
                 </div>
                 
                 <div className="border-t pt-4">
-                  <div className="text-lg font-bold text-blue-900 mb-3">{service.price}</div>
-                  <Button variant="outline" fullWidth size="sm">
-                    Learn More
+                  <div className="text-lg font-bold text-blue-900 mb-3">£{service.price}{service.id === 'personal-mentorship' ? '/month' : ''}</div>
+                  <Button 
+                    variant="secondary" 
+                    fullWidth 
+                    size="sm"
+                    onClick={() => handleBuyNow({
+                      id: service.id,
+                      name: service.title,
+                      price: service.price,
+                      description: service.description,
+                      type: service.id === 'personal-mentorship' ? 'mentorship' : 'course'
+                    })}
+                  >
+                    Buy Now
                   </Button>
                 </div>
               </div>
@@ -315,9 +368,9 @@ const Services = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {servicePackages.map((pkg, index) => (
+            {servicePackages.map((pkg) => (
               <div 
-                key={index} 
+                key={pkg.id} 
                 className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl ${
                   pkg.popular ? 'ring-2 ring-yellow-500 scale-105' : 'border border-gray-200'
                 }`}
@@ -330,7 +383,7 @@ const Services = () => {
                 
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-blue-900 mb-2">{pkg.name}</h3>
-                  <div className="text-3xl font-bold text-blue-900 mb-2">{pkg.price}</div>
+                  <div className="text-3xl font-bold text-blue-900 mb-2">£{pkg.price}</div>
                   <p className="text-gray-600 mb-6">{pkg.description}</p>
                   
                   <div className="mb-6">
@@ -349,8 +402,15 @@ const Services = () => {
                     variant={pkg.popular ? "secondary" : "primary"}
                     fullWidth
                     size="lg"
+                    onClick={() => handleBuyNow({
+                      id: pkg.id,
+                      name: pkg.name,
+                      price: pkg.price,
+                      description: pkg.description,
+                      type: 'course'
+                    })}
                   >
-                    Choose Package
+                    Buy Now - £{pkg.price}
                   </Button>
                 </div>
               </div>
@@ -408,7 +468,17 @@ const Services = () => {
               Join thousands of successful traders who have achieved financial independence with our proven strategies and expert guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
+              <Button 
+                variant="secondary" 
+                size="lg"
+                onClick={() => handleBuyNow({
+                  id: 'free-consultation',
+                  name: 'Free Trading Consultation',
+                  price: 0,
+                  description: 'One-on-one consultation to discuss your trading goals and challenges',
+                  type: 'consultation'
+                })}
+              >
                 Book Free Consultation
               </Button>
               <Button 
@@ -422,6 +492,13 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </div>
   );
 };

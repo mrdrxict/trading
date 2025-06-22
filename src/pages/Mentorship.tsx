@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
 import { Check, Calendar, Users, Video, MessageCircle, BarChart3, Target, Star, Clock, Award } from 'lucide-react';
 import Button from '../components/ui/Button';
+import PaymentModal from '../components/payment/PaymentModal';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  type: 'course' | 'mentorship' | 'consultation';
+}
 
 const Mentorship = () => {
   const [selectedProgram, setSelectedProgram] = useState('quarterly');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const programs = [
     {
@@ -196,8 +207,20 @@ const Mentorship = () => {
     }
   ];
 
-  const handlePurchase = (programName, price) => {
-    alert(`Redirecting to Stripe checkout for ${programName} - £${price}`);
+  const handlePurchase = (program: any) => {
+    setSelectedProduct({
+      id: program.id,
+      name: program.name,
+      price: program.price,
+      description: program.description,
+      type: 'mentorship'
+    });
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
   };
 
   const selectedProgramData = programs.find(p => p.id === selectedProgram);
@@ -316,10 +339,10 @@ const Mentorship = () => {
                     size="lg"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handlePurchase(program.name, program.price);
+                      handlePurchase(program);
                     }}
                   >
-                    Start {program.name} - £{program.price}
+                    Buy Now - £{program.price}
                   </Button>
                   
                   <p className="text-xs text-gray-500 text-center mt-3">
@@ -500,8 +523,8 @@ const Mentorship = () => {
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-blue-900 font-bold text-xl">2</span>
               </div>
-              <h3 className="font-bold text-blue-900 mb-2">Complete Application</h3>
-              <p className="text-gray-600 text-sm">Fill out our application form with your trading background and goals</p>
+              <h3 className="font-bold text-blue-900 mb-2">Complete Payment</h3>
+              <p className="text-gray-600 text-sm">Secure your spot with our easy payment process</p>
             </div>
             
             <div className="text-center">
@@ -509,7 +532,7 @@ const Mentorship = () => {
                 <span className="text-blue-900 font-bold text-xl">3</span>
               </div>
               <h3 className="font-bold text-blue-900 mb-2">Initial Consultation</h3>
-              <p className="text-gray-600 text-sm">Schedule a free 30-minute call to discuss your needs and expectations</p>
+              <p className="text-gray-600 text-sm">Schedule your first session to discuss your needs and expectations</p>
             </div>
             
             <div className="text-center">
@@ -534,8 +557,12 @@ const Mentorship = () => {
               Join our exclusive mentorship program and work directly with Gary Robinson to achieve your trading goals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
-                Apply for Mentorship
+              <Button 
+                variant="secondary" 
+                size="lg"
+                onClick={() => handlePurchase(programs.find(p => p.id === 'monthly'))}
+              >
+                Start Mentorship Now
               </Button>
               <Button 
                 variant="outline" 
@@ -552,6 +579,13 @@ const Mentorship = () => {
           </div>
         </div>
       </section>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </div>
   );
 };
