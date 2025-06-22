@@ -1,76 +1,127 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Calendar, Users, Award } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, Users, Award, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
+import axios from 'axios';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    department: '',
-    subject: '',
+    packageInterest: '',
     message: '',
-    urgency: 'normal'
+    honeypot: '' // Honeypot field to catch bots
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const departmentOptions = [
-    { value: '', label: 'Select Department' },
-    { value: 'general', label: 'General Inquiry' },
-    { value: 'courses', label: 'Course Information' },
-    { value: 'mentorship', label: 'Mentorship Programs' },
-    { value: 'technical', label: 'Technical Support' },
-    { value: 'billing', label: 'Billing & Payments' },
-    { value: 'partnerships', label: 'Business Partnerships' },
-    { value: 'media', label: 'Media & Press' }
+  const packageOptions = [
+    { value: '', label: 'Select your interest' },
+    { value: 'beginner-course', label: 'Beginner Course ($997)' },
+    { value: 'advanced-course', label: 'Advanced Course ($1,997)' },
+    { value: 'elite-course', label: 'Elite Course ($2,997)' },
+    { value: 'monthly-mentorship', label: 'Monthly Mentorship ($499/month)' },
+    { value: 'quarterly-mentorship', label: 'Quarterly Mentorship ($1,299/quarter)' },
+    { value: 'annual-mentorship', label: 'Annual Mentorship ($3,997/year)' },
+    { value: 'consultation', label: 'Free Consultation' },
+    { value: 'other', label: 'Other - Please specify in message' }
   ];
 
-  const urgencyOptions = [
-    { value: 'low', label: 'Low Priority' },
-    { value: 'normal', label: 'Normal Priority' },
-    { value: 'high', label: 'High Priority' },
-    { value: 'urgent', label: 'Urgent' }
-  ];
-
-  const contactMethods = [
-    {
-      icon: <Mail className="text-blue-900" size={32} />,
-      title: 'Email Support',
-      description: 'Get detailed responses to your questions',
-      contact: 'support@garyrobinsontrading.com',
-      responseTime: 'Within 24 hours',
-      availability: '24/7'
-    },
-    {
-      icon: <Phone className="text-blue-900" size={32} />,
-      title: 'Phone Support',
-      description: 'Speak directly with our team',
-      contact: '+44 20 7123 4567',
-      responseTime: 'Immediate',
-      availability: 'Mon-Fri, 9 AM - 6 PM GMT'
-    },
-    {
-      icon: <MessageCircle className="text-blue-900" size={32} />,
-      title: 'Live Chat',
-      description: 'Quick answers to urgent questions',
-      contact: 'Available on website',
-      responseTime: 'Within 5 minutes',
-      availability: 'Mon-Fri, 9 AM - 6 PM GMT'
-    },
-    {
-      icon: <Calendar className="text-blue-900" size={32} />,
-      title: 'Schedule a Call',
-      description: 'Book a personal consultation',
-      contact: 'Online booking system',
-      responseTime: 'Scheduled',
-      availability: 'Flexible scheduling'
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
     }
-  ];
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    }
+    
+    if (!formData.packageInterest) {
+      newErrors.packageInterest = 'Please select your interest';
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      setIsSubmitting(true);
+      setSubmitError('');
+      
+      try {
+        // Submit to backend API
+        const response = await axios.post('http://localhost:3001/api/contact', formData);
+        
+        if (response.data.success) {
+          setIsSuccess(true);
+          // Reset form after 5 seconds
+          setTimeout(() => {
+            setIsSuccess(false);
+            setFormData({
+              name: '',
+              email: '',
+              phone: '',
+              packageInterest: '',
+              message: '',
+              honeypot: ''
+            });
+          }, 5000);
+        } else {
+          setSubmitError(response.data.error || 'Failed to submit form. Please try again.');
+        }
+      } catch (error) {
+        console.error('Contact form submission error:', error);
+        setSubmitError('Failed to submit form. Please try again later.');
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
 
   const officeLocations = [
     {
@@ -78,14 +129,14 @@ const Contact = () => {
       address: '123 Financial District, London EC2V 8RF, UK',
       phone: '+44 20 7123 4567',
       email: 'london@garyrobinsontrading.com',
-      hours: 'Mon-Fri: 9:00 AM - 6:00 PM GMT'
+      hours: 'Mon-Fri, 9 AM - 6 PM GMT'
     },
     {
       city: 'New York',
       address: '456 Wall Street, New York, NY 10005, USA',
       phone: '+1 (212) 555-0123',
       email: 'newyork@garyrobinsontrading.com',
-      hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST'
+      hours: 'Mon-Fri, 9 AM - 6 PM EST'
     }
   ];
 
@@ -107,72 +158,6 @@ const Contact = () => {
       answer: 'For urgent trading-related issues, mark your inquiry as "Urgent" and we\'ll prioritize your request. Critical technical issues are addressed immediately.'
     }
   ];
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleSelectChange = (name, value) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    if (!formData.department) newErrors.department = 'Please select a department';
-    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (validateForm()) {
-      setIsSubmitting(true);
-      
-      // Simulate API call
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSuccess(true);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          department: '',
-          subject: '',
-          message: '',
-          urgency: 'normal'
-        });
-      }, 1500);
-    }
-  };
 
   return (
     <div className="pt-24">
@@ -205,7 +190,7 @@ const Contact = () => {
               <p className="text-gray-200">Support Team</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
-              <MessageCircle className="text-yellow-500 mx-auto mb-3" size={32} />
+              <Mail className="text-yellow-500 mx-auto mb-3" size={32} />
               <div className="text-2xl font-bold text-yellow-500 mb-2">Multiple</div>
               <p className="text-gray-200">Contact Methods</p>
             </div>
@@ -214,50 +199,6 @@ const Contact = () => {
               <div className="text-2xl font-bold text-yellow-500 mb-2">Premium</div>
               <p className="text-gray-200">Support Quality</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Methods */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
-              How Can We Help You?
-            </h2>
-            <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              Choose the contact method that works best for you
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contactMethods.map((method, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {method.icon}
-                </div>
-                
-                <h3 className="font-bold text-blue-900 text-center mb-3">{method.title}</h3>
-                <p className="text-gray-600 text-center text-sm mb-4">{method.description}</p>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="text-center">
-                    <span className="font-medium text-blue-900">{method.contact}</span>
-                  </div>
-                  <div className="text-center text-gray-600">
-                    <div>Response: {method.responseTime}</div>
-                    <div>Available: {method.availability}</div>
-                  </div>
-                </div>
-                
-                <div className="mt-4">
-                  <Button variant="outline" fullWidth size="sm">
-                    {method.title === 'Schedule a Call' ? 'Book Now' : 'Contact Now'}
-                  </Button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -275,21 +216,26 @@ const Contact = () => {
               {isSuccess ? (
                 <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
                   <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Send className="text-green-600" size={32} />
+                    <CheckCircle className="text-green-600" size={32} />
                   </div>
                   <h3 className="text-xl font-bold text-green-800 mb-4">Message Sent Successfully!</h3>
                   <p className="text-green-700 mb-6">
                     Thank you for contacting us. We've received your message and will respond within 24 hours.
                   </p>
-                  <Button 
-                    variant="primary"
-                    onClick={() => setIsSuccess(false)}
-                  >
-                    Send Another Message
-                  </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Honeypot field - hidden from users but bots will fill it */}
+                  <input 
+                    type="text" 
+                    name="honeypot" 
+                    value={formData.honeypot}
+                    onChange={handleChange}
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
                       label="Full Name"
@@ -322,33 +268,13 @@ const Contact = () => {
                     required
                   />
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Select
-                      label="Department"
-                      name="department"
-                      value={formData.department}
-                      onChange={(value) => handleSelectChange('department', value)}
-                      options={departmentOptions}
-                      error={errors.department}
-                    />
-                    
-                    <Select
-                      label="Priority Level"
-                      name="urgency"
-                      value={formData.urgency}
-                      onChange={(value) => handleSelectChange('urgency', value)}
-                      options={urgencyOptions}
-                    />
-                  </div>
-                  
-                  <Input
-                    label="Subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="Brief description of your inquiry"
-                    error={errors.subject}
-                    required
+                  <Select
+                    label="Package Interest"
+                    name="packageInterest"
+                    value={formData.packageInterest}
+                    onChange={(value) => handleSelectChange('packageInterest', value)}
+                    options={packageOptions}
+                    error={errors.packageInterest}
                   />
                   
                   <div>
@@ -359,15 +285,24 @@ const Contact = () => {
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      rows={6}
-                      className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 ${
+                      rows={4}
+                      className={`w-full px-3 py-2 border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-900 focus:ring-blue-900 block rounded-md sm:text-sm focus:ring-1 ${
                         errors.message ? 'border-red-500' : ''
                       }`}
-                      placeholder="Please provide detailed information about your inquiry..."
+                      placeholder="Tell Gary about your trading goals, experience level, and what you hope to achieve..."
                       required
                     ></textarea>
                     {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
                   </div>
+                  
+                  {submitError && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                      <div className="flex items-start">
+                        <AlertCircle className="mr-2 mt-0.5" size={16} />
+                        <span>{submitError}</span>
+                      </div>
+                    </div>
+                  )}
                   
                   <Button 
                     type="submit"
@@ -376,10 +311,17 @@ const Contact = () => {
                     size="lg"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center">
+                        <Loader2 className="animate-spin mr-2" size={20} />
+                        Sending Message...
+                      </span>
+                    ) : (
+                      'Send Message'
+                    )}
                   </Button>
                   
-                  <p className="text-gray-500 text-sm text-center">
+                  <p className="text-gray-500 text-sm text-center mt-4">
                     By submitting this form, you agree to our privacy policy and terms of service.
                   </p>
                 </form>
@@ -461,8 +403,8 @@ const Contact = () => {
                 Emergency: +44 20 7123 4999
               </Button>
               <Button variant="outline" className="border-red-500 text-red-700 hover:bg-red-50">
-                <MessageCircle className="mr-2" size={16} />
-                Priority Live Chat
+                <Mail className="mr-2" size={16} />
+                urgent@garyrobinsontrading.com
               </Button>
             </div>
             <p className="text-red-600 text-sm mt-4">
