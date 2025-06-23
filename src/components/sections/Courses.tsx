@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Check, Star, Clock, Users, BookOpen, Award } from 'lucide-react';
 import Button from '../ui/Button';
+import PaymentModal from '../payment/PaymentModal';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  type: 'course' | 'mentorship' | 'consultation';
+}
 
 const Courses = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
   const courses = [
     {
+      id: "beginner-package",
       name: "Beginner Package",
       price: 997,
       originalPrice: 1297,
@@ -32,6 +45,7 @@ const Courses = () => {
       popular: false
     },
     {
+      id: "advanced-package",
       name: "Advanced Package",
       price: 1997,
       originalPrice: 2497,
@@ -60,6 +74,7 @@ const Courses = () => {
       popular: true
     },
     {
+      id: "elite-package",
       name: "Elite Package",
       price: 2997,
       originalPrice: 3997,
@@ -90,9 +105,20 @@ const Courses = () => {
     }
   ];
 
-  const handlePurchase = (courseName: string, price: number) => {
-    // This would integrate with Stripe
-    alert(`Redirecting to Stripe checkout for ${courseName} - $${price}`);
+  const handlePurchase = (course: any) => {
+    setSelectedProduct({
+      id: course.id,
+      name: course.name,
+      price: course.price,
+      description: course.description,
+      type: 'course'
+    });
+    setIsPaymentModalOpen(true);
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
   };
 
   return (
@@ -184,9 +210,9 @@ const Courses = () => {
                   variant={course.popular ? "secondary" : "primary"}
                   fullWidth
                   size="lg"
-                  onClick={() => handlePurchase(course.name, course.price)}
+                  onClick={() => handlePurchase(course)}
                 >
-                  Enroll Now - ${course.price}
+                  Buy Now - ${course.price}
                 </Button>
                 
                 <p className="text-xs text-gray-500 text-center mt-3">
@@ -206,6 +232,13 @@ const Courses = () => {
           </p>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </section>
   );
 };

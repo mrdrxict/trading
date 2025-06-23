@@ -62,6 +62,38 @@ The platform features a comprehensive payment integration system that connects a
 - Consistent payment flow across all products
 - Support for courses, mentorship programs, and consultations
 
+### Contact Form System
+
+The platform includes a fully functional contact form system with:
+
+- **Frontend Features**:
+  - Real-time validation
+  - Success/error messages with animations
+  - Honeypot spam protection
+  - Loading states with spinner animations
+
+- **Backend Infrastructure**:
+  - Express.js server with rate limiting
+  - Input sanitization to prevent XSS attacks
+  - CORS protection
+  - Error handling with detailed logging
+
+- **Email System**:
+  - Nodemailer integration with SMTP support
+  - Dual email notifications (user confirmation and admin alert)
+  - HTML email templates with modern styling
+
+- **Database Integration**:
+  - Supabase storage for contact messages
+  - Automatic timestamps and status tracking
+  - Data validation and sanitization
+
+- **Security Features**:
+  - Honeypot field for bot detection
+  - Rate limiting to prevent spam
+  - Input sanitization against XSS
+  - Environment variables for sensitive data
+
 ## Technical Stack
 
 - **Frontend**: React, TypeScript, Tailwind CSS
