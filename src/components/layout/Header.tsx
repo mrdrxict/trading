@@ -39,6 +39,7 @@ const Header = () => {
         { name: 'Trading Calculators', path: '/trading-calculators' },
       ]
     },
+    { name: 'Mentorship', path: '/mentorship' },
     { 
       name: 'Resources', 
       path: '#',
