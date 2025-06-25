@@ -31,7 +31,6 @@ const Header = () => {
       dropdownItems: [
         { name: 'All Services', path: '/services' },
         { name: 'Courses', path: '/courses' },
-        { name: 'Mentorship', path: '/mentorship' },
         { name: 'Daily Trading Signals', path: '/daily-trading-signals' },
         { name: 'Market Analysis', path: '/market-analysis' },
         { name: 'Trading Calculators', path: '/trading-calculators' },
@@ -42,6 +41,7 @@ const Header = () => {
         { name: 'Certifications', path: '/certifications' },
       ]
     },
+    { name: 'Mentorship', path: '/mentorship' },
     { name: 'Contact', path: '/contact' },
   ];
 
