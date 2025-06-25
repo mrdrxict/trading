@@ -48,6 +48,16 @@ const TradingCalculators = () => {
     timeHorizon: 24
   });
 
+  // Pip Value Calculator State
+  const [pipValueData, setPipValueData] = useState({
+    instrument: 'EUR/USD',
+    lotSize: 1,
+    accountCurrency: 'GBP',
+    customInstrument: '',
+    customRate: 1,
+    instrumentType: 'forex'
+  });
+
   const calculatorTypes = [
     {
       id: 'position-size',
@@ -83,7 +93,7 @@ const TradingCalculators = () => {
       id: 'pip-value',
       name: 'Pip Value Calculator',
       icon: <Percent className="text-blue-900" size={24} />,
-      description: 'Calculate pip values for different currency pairs'
+      description: 'Calculate pip values for different instruments'
     }
   ];
 
@@ -186,11 +196,115 @@ const TradingCalculators = () => {
     };
   };
 
+  // Pip Value Calculations
+  const calculatePipValue = () => {
+    const { instrument, lotSize, accountCurrency, customInstrument, customRate, instrumentType } = pipValueData;
+    
+    // Standard lot size in units
+    const standardLotUnits = 100000;
+    const microLotUnits = 1000;
+    
+    // Convert lot size to units
+    const positionSizeUnits = lotSize * standardLotUnits;
+    
+    let pipValue = 0;
+    let pipSize = 0.0001; // Default pip size for most forex pairs
+    let conversionRate = 1; // Default conversion rate
+    let instrumentDisplay = instrument;
+    
+    // Determine pip size and conversion rate based on instrument type and selection
+    if (instrumentType === 'forex') {
+      // Handle forex pairs
+      if (instrument === 'USD/JPY' || instrument === 'GBP/JPY' || instrument === 'EUR/JPY') {
+        pipSize = 0.01; // JPY pairs have different pip size
+      }
+      
+      // Determine conversion rate to account currency
+      if (instrument.endsWith('/USD') || instrument === 'XAU/USD' || instrument === 'XAG/USD') {
+        // Direct quote to USD
+        conversionRate = accountCurrency === 'USD' ? 1 : (accountCurrency === 'GBP' ? 1.27 : 1.08); // Approximate GBP/USD and EUR/USD rates
+      } else if (instrument.startsWith('USD/')) {
+        // Indirect quote from USD
+        const rate = instrument === 'USD/JPY' ? 150 : (instrument === 'USD/CAD' ? 1.35 : 1.08);
+        conversionRate = accountCurrency === 'USD' ? (1 / rate) : 
+                        (accountCurrency === 'GBP' ? (1.27 / rate) : (1.08 / rate));
+      } else {
+        // Cross rates
+        if (accountCurrency === 'USD') {
+          conversionRate = instrument.startsWith('EUR/') ? 1.08 : (instrument.startsWith('GBP/') ? 1.27 : 1);
+        } else if (accountCurrency === 'GBP') {
+          conversionRate = 1;
+        } else if (accountCurrency === 'EUR') {
+          conversionRate = 0.85;
+        }
+      }
+    } else if (instrumentType === 'futures') {
+      // Handle futures contracts
+      instrumentDisplay = instrument;
+      
+      switch(instrument) {
+        case 'MGC': // Micro Gold
+          pipSize = 0.10; // $0.10 per tick
+          conversionRate = accountCurrency === 'USD' ? 1 : (accountCurrency === 'GBP' ? 1.27 : 1.08);
+          break;
+        case 'MNQ': // Micro Nasdaq
+          pipSize = 0.50; // $0.50 per tick
+          conversionRate = accountCurrency === 'USD' ? 1 : (accountCurrency === 'GBP' ? 1.27 : 1.08);
+          break;
+        case 'MCL': // Micro Crude Oil
+          pipSize = 0.01; // $0.01 per tick
+          conversionRate = accountCurrency === 'USD' ? 1 : (accountCurrency === 'GBP' ? 1.27 : 1.08);
+          break;
+        case 'M6E': // Micro Euro
+          pipSize = 0.0001; // $0.0001 per tick
+          conversionRate = accountCurrency === 'USD' ? 1 : (accountCurrency === 'GBP' ? 1.27 : 1.08);
+          break;
+        case 'MES': // Micro E-mini S&P 500
+          pipSize = 0.25; // $0.25 per tick
+          conversionRate = accountCurrency === 'USD' ? 1 : (accountCurrency === 'GBP' ? 1.27 : 1.08);
+          break;
+        default:
+          pipSize = 0.01;
+          conversionRate = 1;
+      }
+    } else if (instrumentType === 'custom') {
+      // Handle custom instrument
+      instrumentDisplay = customInstrument || 'Custom';
+      pipSize = 0.0001;
+      conversionRate = customRate;
+    }
+    
+    // Calculate pip value
+    if (instrumentType === 'futures') {
+      // For futures, pip value is fixed per contract
+      pipValue = pipSize * lotSize * conversionRate;
+    } else {
+      // For forex, pip value depends on position size and pair
+      pipValue = (positionSizeUnits * pipSize) * conversionRate;
+    }
+    
+    // Calculate values for different lot sizes
+    const microLotValue = (pipValue / lotSize) * (microLotUnits / standardLotUnits);
+    const miniLotValue = microLotValue * 10;
+    const standardLotValue = miniLotValue * 10;
+    
+    return {
+      pipValue: pipValue.toFixed(2),
+      pipSize: pipSize,
+      microLotValue: microLotValue.toFixed(2),
+      miniLotValue: miniLotValue.toFixed(2),
+      standardLotValue: standardLotValue.toFixed(2),
+      instrumentDisplay: instrumentDisplay,
+      accountCurrency: accountCurrency
+    };
+  };
+
   const positionResults = calculatePositionSize();
   const profitLossResults = calculateProfitLoss();
   const riskRewardResults = calculateRiskReward();
   const marginResults = calculateMargin();
   const compoundResults = calculateCompoundGrowth();
+  const pipValueResults = calculatePipValue();
 
   const exportResults = (calculatorType) => {
     let data = {};
@@ -209,6 +323,9 @@ const TradingCalculators = () => {
         break;
       case 'compound':
         data = { ...compoundData, ...compoundResults };
+        break;
+      case 'pip-value':
+        data = { ...pipValueData, ...pipValueResults };
         break;
     }
     
@@ -839,15 +956,210 @@ const TradingCalculators = () => {
                   </Button>
                 </div>
                 
-                <div className="text-center py-12">
-                  <PieChart className="text-blue-900 mx-auto mb-4" size={64} />
-                  <h3 className="text-xl font-bold text-blue-900 mb-4">Pip Value Calculator</h3>
-                  <p className="text-gray-600 mb-6">
-                    This calculator is coming soon! It will help you calculate pip values for different currency pairs and position sizes.
-                  </p>
-                  <Button variant="outline">
-                    Notify When Available
-                  </Button>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-lg font-bold text-blue-900 mb-6">Instrument Details</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Instrument Type
+                        </label>
+                        <select
+                          value={pipValueData.instrumentType}
+                          onChange={(e) => setPipValueData({...pipValueData, instrumentType: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        >
+                          <option value="forex">Forex</option>
+                          <option value="futures">Futures</option>
+                          <option value="custom">Custom</option>
+                        </select>
+                      </div>
+                      
+                      {pipValueData.instrumentType === 'forex' && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Forex Pair
+                          </label>
+                          <select
+                            value={pipValueData.instrument}
+                            onChange={(e) => setPipValueData({...pipValueData, instrument: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                          >
+                            <option value="EUR/USD">EUR/USD</option>
+                            <option value="GBP/USD">GBP/USD</option>
+                            <option value="USD/JPY">USD/JPY</option>
+                            <option value="USD/CHF">USD/CHF</option>
+                            <option value="AUD/USD">AUD/USD</option>
+                            <option value="USD/CAD">USD/CAD</option>
+                            <option value="NZD/USD">NZD/USD</option>
+                            <option value="EUR/GBP">EUR/GBP</option>
+                            <option value="GBP/JPY">GBP/JPY</option>
+                            <option value="EUR/JPY">EUR/JPY</option>
+                          </select>
+                        </div>
+                      )}
+                      
+                      {pipValueData.instrumentType === 'futures' && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Futures Contract
+                          </label>
+                          <select
+                            value={pipValueData.instrument}
+                            onChange={(e) => setPipValueData({...pipValueData, instrument: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                          >
+                            <option value="MGC">MGC (Micro Gold)</option>
+                            <option value="MNQ">MNQ (Micro Nasdaq)</option>
+                            <option value="MCL">MCL (Micro Crude Oil)</option>
+                            <option value="M6E">M6E (Micro Euro)</option>
+                            <option value="MES">MES (Micro E-mini S&P 500)</option>
+                          </select>
+                        </div>
+                      )}
+                      
+                      {pipValueData.instrumentType === 'custom' && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Custom Instrument Name
+                            </label>
+                            <input
+                              type="text"
+                              value={pipValueData.customInstrument}
+                              onChange={(e) => setPipValueData({...pipValueData, customInstrument: e.target.value})}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                              placeholder="e.g., XAU/USD"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                              Conversion Rate to Account Currency
+                            </label>
+                            <input
+                              type="number"
+                              step="0.0001"
+                              value={pipValueData.customRate}
+                              onChange={(e) => setPipValueData({...pipValueData, customRate: parseFloat(e.target.value)})}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                              placeholder="e.g., 1.27 for GBP/USD"
+                            />
+                          </div>
+                        </>
+                      )}
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Lot Size
+                        </label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={pipValueData.lotSize}
+                          onChange={(e) => setPipValueData({...pipValueData, lotSize: parseFloat(e.target.value)})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Account Currency
+                        </label>
+                        <select
+                          value={pipValueData.accountCurrency}
+                          onChange={(e) => setPipValueData({...pipValueData, accountCurrency: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        >
+                          <option value="GBP">GBP (£)</option>
+                          <option value="USD">USD ($)</option>
+                          <option value="EUR">EUR (€)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-bold text-blue-900 mb-6">Pip Value Results</h3>
+                    <div className="space-y-4">
+                      <div className="bg-blue-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-600">Instrument</div>
+                        <div className="text-2xl font-bold text-blue-600">{pipValueResults.instrumentDisplay}</div>
+                      </div>
+                      
+                      <div className="bg-green-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-600">Pip Value (Current Lot Size)</div>
+                        <div className="text-2xl font-bold text-green-600">
+                          {pipValueData.accountCurrency === 'GBP' ? '£' : 
+                           pipValueData.accountCurrency === 'USD' ? '$' : '€'}
+                          {pipValueResults.pipValue} per pip
+                        </div>
+                      </div>
+                      
+                      <div className="bg-gray-100 p-4 rounded-lg">
+                        <h4 className="font-medium text-blue-900 mb-3">Pip Value by Lot Size</h4>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="bg-white p-3 rounded-lg text-center">
+                            <div className="text-sm text-gray-600">Micro Lot (0.01)</div>
+                            <div className="font-bold text-blue-900">
+                              {pipValueData.accountCurrency === 'GBP' ? '£' : 
+                               pipValueData.accountCurrency === 'USD' ? '$' : '€'}
+                              {pipValueResults.microLotValue}
+                            </div>
+                          </div>
+                          <div className="bg-white p-3 rounded-lg text-center">
+                            <div className="text-sm text-gray-600">Mini Lot (0.1)</div>
+                            <div className="font-bold text-blue-900">
+                              {pipValueData.accountCurrency === 'GBP' ? '£' : 
+                               pipValueData.accountCurrency === 'USD' ? '$' : '€'}
+                              {pipValueResults.miniLotValue}
+                            </div>
+                          </div>
+                          <div className="bg-white p-3 rounded-lg text-center">
+                            <div className="text-sm text-gray-600">Standard Lot (1.0)</div>
+                            <div className="font-bold text-blue-900">
+                              {pipValueData.accountCurrency === 'GBP' ? '£' : 
+                               pipValueData.accountCurrency === 'USD' ? '$' : '€'}
+                              {pipValueResults.standardLotValue}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-yellow-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-600">Pip Size</div>
+                        <div className="text-lg font-bold text-yellow-600">
+                          {pipValueResults.pipSize} {pipValueData.instrumentType === 'futures' ? 'points per tick' : 'per pip'}
+                        </div>
+                      </div>
+                      
+                      <div className="bg-purple-50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-600">Account Currency</div>
+                        <div className="text-lg font-bold text-purple-600">
+                          {pipValueData.accountCurrency === 'GBP' ? 'British Pound (£)' : 
+                           pipValueData.accountCurrency === 'USD' ? 'US Dollar ($)' : 'Euro (€)'}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Pip Value Information */}
+                <div className="mt-8 bg-blue-50 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold text-blue-900 mb-4">Understanding Pip Values</h3>
+                  <div className="text-gray-700 text-sm space-y-2">
+                    <p>
+                      <strong>Forex:</strong> A pip is typically the 4th decimal place in most currency pairs (0.0001) or 2nd decimal place for JPY pairs (0.01).
+                    </p>
+                    <p>
+                      <strong>Futures:</strong> Tick values vary by contract. For example, MNQ has a tick value of $0.50, while MGC has a tick value of $0.10.
+                    </p>
+                    <p>
+                      <strong>Lot Sizes:</strong> Standard lot = 100,000 units, Mini lot = 10,000 units, Micro lot = 1,000 units.
+                    </p>
+                    <p>
+                      <strong>Risk Management:</strong> Understanding pip values is crucial for proper position sizing and risk management.
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
