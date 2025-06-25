@@ -6,7 +6,6 @@ import Button from '../ui/Button';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
   const location = useLocation();
 
   const toggleMenu = () => {
@@ -16,7 +15,6 @@ const Header = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
-    setIsResourcesOpen(false);
   };
 
   const isActive = (path: string) => {
@@ -37,14 +35,6 @@ const Header = () => {
         { name: 'Daily Trading Signals', path: '/daily-trading-signals' },
         { name: 'Market Analysis', path: '/market-analysis' },
         { name: 'Trading Calculators', path: '/trading-calculators' },
-      ]
-    },
-    { name: 'Mentorship', path: '/mentorship' },
-    { 
-      name: 'Resources', 
-      path: '#',
-      hasDropdown: true,
-      dropdownItems: [
         { name: 'Blog', path: '/blog' },
         { name: 'Educational Blog', path: '/educational-blog' },
         { name: 'Trading Strategies', path: '/trading-strategies' },
@@ -71,7 +61,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8 ml-auto">
             {navItems.map((item) => (
               <div key={item.name} className="relative group">
                 {item.hasDropdown ? (
@@ -82,7 +72,6 @@ const Header = () => {
                       }`}
                       onMouseEnter={() => {
                         if (item.name === 'Services') setIsServicesOpen(true);
-                        if (item.name === 'Resources') setIsResourcesOpen(true);
                       }}
                     >
                       {item.name}
@@ -92,17 +81,15 @@ const Header = () => {
                     {/* Dropdown Menu */}
                     <div 
                       className={`absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 transition-all duration-200 ${
-                        (item.name === 'Services' && isServicesOpen) || (item.name === 'Resources' && isResourcesOpen)
+                        (item.name === 'Services' && isServicesOpen)
                           ? 'opacity-100 visible transform translate-y-0'
                           : 'opacity-0 invisible transform -translate-y-2'
                       }`}
                       onMouseEnter={() => {
                         if (item.name === 'Services') setIsServicesOpen(true);
-                        if (item.name === 'Resources') setIsResourcesOpen(true);
                       }}
                       onMouseLeave={() => {
                         if (item.name === 'Services') setIsServicesOpen(false);
-                        if (item.name === 'Resources') setIsResourcesOpen(false);
                       }}
                     >
                       {item.dropdownItems?.map((dropItem) => (
@@ -114,7 +101,6 @@ const Header = () => {
                           }`}
                           onClick={() => {
                             setIsServicesOpen(false);
-                            setIsResourcesOpen(false);
                           }}
                         >
                           {dropItem.name}
@@ -170,13 +156,12 @@ const Header = () => {
                       className="w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:text-blue-900 hover:bg-gray-50 transition-colors"
                       onClick={() => {
                         if (item.name === 'Services') setIsServicesOpen(!isServicesOpen);
-                        if (item.name === 'Resources') setIsResourcesOpen(!isResourcesOpen);
                       }}
                     >
                       {item.name}
                       <ChevronDown 
                         className={`transition-transform duration-200 ${
-                          (item.name === 'Services' && isServicesOpen) || (item.name === 'Resources' && isResourcesOpen)
+                          (item.name === 'Services' && isServicesOpen)
                             ? 'rotate-180' 
                             : ''
                         }`} 
@@ -186,7 +171,7 @@ const Header = () => {
                     
                     {/* Mobile Dropdown */}
                     <div className={`transition-all duration-200 ${
-                      (item.name === 'Services' && isServicesOpen) || (item.name === 'Resources' && isResourcesOpen)
+                      (item.name === 'Services' && isServicesOpen)
                         ? 'max-h-96 opacity-100'
                         : 'max-h-0 opacity-0 overflow-hidden'
                     }`}>
