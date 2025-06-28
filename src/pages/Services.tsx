@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TrendingUp, BarChart3, Bitcoin, DollarSign, Globe, Target, Users, Clock, Award, CheckCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import PaymentModal from '../components/payment/PaymentModal';
+import { Link } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -36,7 +37,7 @@ const Services = () => {
         "Multiple trading strategies"
       ],
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: 797
+      price: 200
     },
     {
       id: 'futures-mastery',
@@ -58,7 +59,7 @@ const Services = () => {
         "Diverse asset exposure"
       ],
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: 797
+      price: 200
     },
     {
       id: 'crypto-trading',
@@ -80,7 +81,7 @@ const Services = () => {
         "Decentralized finance access"
       ],
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      price: 797
+      price: 200
     }
   ];
 
@@ -91,7 +92,7 @@ const Services = () => {
       title: "Personal Mentorship",
       description: "One-on-one coaching with Gary Robinson for accelerated learning and personalized strategy development.",
       features: ["1-on-1 Sessions", "Custom Strategies", "Performance Review", "Direct Access"],
-      price: 499
+      price: 100
     },
     {
       id: 'trading-room',
@@ -99,7 +100,7 @@ const Services = () => {
       title: "Trading Room Access",
       description: "Join live trading sessions and see professional strategies in action with real-time market analysis.",
       features: ["Live Trading", "Real-time Analysis", "Q&A Sessions", "Community Access"],
-      price: 199
+      price: 50
     },
     {
       id: 'strategy-development',
@@ -107,7 +108,7 @@ const Services = () => {
       title: "Strategy Development",
       description: "Custom trading strategy creation based on your risk tolerance, capital, and trading goals.",
       features: ["Custom Strategies", "Backtesting", "Optimization", "Implementation Guide"],
-      price: 1997
+      price: 500
     },
     {
       id: 'certification',
@@ -115,7 +116,7 @@ const Services = () => {
       title: "Certification Program",
       description: "Earn professional trading certification recognized by industry professionals and institutions.",
       features: ["Comprehensive Curriculum", "Practical Exams", "Industry Recognition", "Continuing Education"],
-      price: 2997
+      price: 500
     }
   ];
 
@@ -123,7 +124,7 @@ const Services = () => {
     {
       id: 'starter-package',
       name: "Starter Package",
-      price: 797,
+      price: 200,
       description: "Perfect for beginners starting their trading journey",
       includes: [
         "Forex Trading Fundamentals",
@@ -138,7 +139,7 @@ const Services = () => {
     {
       id: 'professional-package',
       name: "Professional Package",
-      price: 1597,
+      price: 350,
       description: "Comprehensive training for serious traders",
       includes: [
         "All Starter Package Content",
@@ -154,7 +155,7 @@ const Services = () => {
     {
       id: 'elite-package',
       name: "Elite Package",
-      price: 2397,
+      price: 500,
       description: "Complete mastery program with personal mentorship",
       includes: [
         "All Professional Package Content",
@@ -196,7 +197,7 @@ const Services = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
-              <div className="text-3xl font-bold text-yellow-500 mb-2">15+</div>
+              <div className="text-3xl font-bold text-yellow-500 mb-2">10+</div>
               <p className="text-gray-200">Years Experience</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
@@ -238,7 +239,7 @@ const Services = () => {
                       {service.icon}
                     </div>
                     <div className="absolute bottom-4 right-4 bg-yellow-500 text-blue-900 px-4 py-2 rounded-lg font-bold">
-                      £{service.price}
+                      ${service.price}
                     </div>
                   </div>
                 </div>
@@ -283,11 +284,13 @@ const Services = () => {
                         type: 'course'
                       })}
                     >
-                      Buy Now - £{service.price}
+                      Buy Now - ${service.price}
                     </Button>
-                    <Button variant="outline" size="lg">
-                      Learn More
-                    </Button>
+                    <Link to={`/courses`}>
+                      <Button variant="outline" size="lg">
+                        Learn More
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -332,7 +335,7 @@ const Services = () => {
                 </div>
                 
                 <div className="border-t pt-4">
-                  <div className="text-lg font-bold text-blue-900 mb-3">£{service.price}{service.id === 'personal-mentorship' ? '/month' : ''}</div>
+                  <div className="text-lg font-bold text-blue-900 mb-3">${service.price}{service.id === 'personal-mentorship' ? '/month' : ''}</div>
                   <Button 
                     variant="secondary" 
                     fullWidth 
@@ -383,7 +386,7 @@ const Services = () => {
                 
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-blue-900 mb-2">{pkg.name}</h3>
-                  <div className="text-3xl font-bold text-blue-900 mb-2">£{pkg.price}</div>
+                  <div className="text-3xl font-bold text-blue-900 mb-2">${pkg.price}</div>
                   <p className="text-gray-600 mb-6">{pkg.description}</p>
                   
                   <div className="mb-6">
@@ -410,7 +413,7 @@ const Services = () => {
                       type: 'course'
                     })}
                   >
-                    Buy Now - £{pkg.price}
+                    Buy Now - ${pkg.price}
                   </Button>
                 </div>
               </div>
@@ -435,7 +438,7 @@ const Services = () => {
                 <Award className="text-blue-900" size={32} />
               </div>
               <h3 className="font-bold text-blue-900 mb-3">Proven Track Record</h3>
-              <p className="text-gray-600">15+ years of professional trading experience with verified results and thousands of successful students.</p>
+              <p className="text-gray-600">10+ years of professional trading experience with verified results and thousands of successful students.</p>
             </div>
 
             <div className="bg-white rounded-xl p-6 shadow-md text-center">
@@ -472,22 +475,24 @@ const Services = () => {
                 variant="secondary" 
                 size="lg"
                 onClick={() => handleBuyNow({
-                  id: 'free-consultation',
-                  name: 'Free Trading Consultation',
-                  price: 0,
+                  id: 'one-on-one-consultation',
+                  name: 'One-on-One Trading Consultation',
+                  price: 50,
                   description: 'One-on-one consultation to discuss your trading goals and challenges',
                   type: 'consultation'
                 })}
               >
-                Book Free Consultation
+                Book $50 Consultation
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                View All Courses
-              </Button>
+              <Link to="/courses">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-white text-white hover:bg-white hover:text-blue-900"
+                >
+                  View All Courses
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calculator, BookOpen, TrendingUp, Shield, Target, BarChart3 } from 'lucide-react';
 import Button from '../ui/Button';
+import { Link } from 'react-router-dom';
 
 const TradingResources = () => {
   const resources = [
@@ -9,42 +10,42 @@ const TradingResources = () => {
       title: "Position Size Calculator",
       description: "Calculate optimal position sizes based on your risk tolerance and account size.",
       features: ["Risk percentage input", "Stop loss calculator", "Lot size optimization"],
-      link: "#calculator"
+      link: "/trading-calculators#position-size"
     },
     {
       icon: <TrendingUp className="text-yellow-500" size={32} />,
       title: "Profit/Loss Calculator",
       description: "Determine potential profits and losses before entering any trade.",
       features: ["Multi-currency support", "Pip value calculator", "Risk-reward ratios"],
-      link: "#profit-calculator"
+      link: "/trading-calculators#profit-loss"
     },
     {
       icon: <BarChart3 className="text-yellow-500" size={32} />,
       title: "Market Analysis Tools",
       description: "Professional-grade tools for technical and fundamental analysis.",
       features: ["Economic calendar", "Technical indicators", "Market sentiment"],
-      link: "#analysis-tools"
+      link: "/market-analysis"
     },
     {
       icon: <Shield className="text-yellow-500" size={32} />,
       title: "Risk Management Guide",
       description: "Comprehensive guide to protecting your trading capital.",
       features: ["Risk assessment", "Portfolio diversification", "Stop loss strategies"],
-      link: "#risk-guide"
+      link: "/risk-management"
     },
     {
       icon: <Target className="text-yellow-500" size={32} />,
       title: "Trading Strategies",
       description: "Proven strategies for Forex, Futures, and Crypto markets.",
       features: ["Entry/exit rules", "Backtesting results", "Implementation guides"],
-      link: "#strategies"
+      link: "/trading-strategies"
     },
     {
       icon: <BookOpen className="text-yellow-500" size={32} />,
       title: "Educational Library",
       description: "Extensive collection of trading education materials.",
       features: ["Video tutorials", "Trading glossary", "Market guides"],
-      link: "#education"
+      link: "/educational-blog"
     }
   ];
 
@@ -108,9 +109,11 @@ const TradingResources = () => {
                 ))}
               </ul>
               
-              <Button variant="outline" fullWidth>
-                Access Tool
-              </Button>
+              <Link to={resource.link}>
+                <Button variant="outline" fullWidth>
+                  Access Tool
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
@@ -148,9 +151,11 @@ const TradingResources = () => {
                 
                 <p className="text-gray-700 text-sm mb-4">{strategy.description}</p>
                 
-                <Button variant="primary" fullWidth size="sm">
-                  Learn Strategy
-                </Button>
+                <Link to="/contact">
+                  <Button variant="primary" fullWidth size="sm">
+                    Learn Strategy
+                  </Button>
+                </Link>
               </div>
             ))}
           </div>

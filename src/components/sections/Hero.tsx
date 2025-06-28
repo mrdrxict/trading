@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../ui/Button';
 import { TrendingUp, Award, Users, Clock, BarChart3, DollarSign } from 'lucide-react';
 import PaymentModal from '../payment/PaymentModal';
@@ -9,9 +9,9 @@ const Hero = () => {
 
   const handleConsultation = () => {
     setSelectedProduct({
-      id: 'free-consultation',
-      name: 'Free Trading Consultation',
-      price: 0,
+      id: 'one-on-one-consultation',
+      name: 'One-on-One Trading Consultation',
+      price: 50,
       description: 'One-on-one consultation to discuss your trading goals and challenges',
       type: 'consultation'
     });
@@ -38,7 +38,7 @@ const Hero = () => {
           <div className="text-center lg:text-left">
             <div className="inline-flex items-center bg-yellow-500/20 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Award className="mr-2" size={16} />
-              15+ Years Trading Experience
+              10+ Years Trading Experience
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
@@ -46,7 +46,7 @@ const Hero = () => {
             </h1>
             
             <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto lg:mx-0">
-              Learn from Gary Robinson, a professional trader with over 15 years of experience. Transform your trading with proven strategies that work across all markets.
+              Learn from Gary Robinson, a professional trader with over 10 years of experience. Transform your trading with proven strategies that work across all markets.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
@@ -63,7 +63,7 @@ const Hero = () => {
                 className="border-white text-white hover:bg-white hover:text-blue-900"
                 onClick={handleConsultation}
               >
-                Free Consultation
+                $50 Consultation
               </Button>
             </div>
             
@@ -86,7 +86,7 @@ const Hero = () => {
               <div className="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
                 <div className="flex items-center justify-center mb-2">
                   <BarChart3 className="text-yellow-500 mr-2" size={24} />
-                  <span className="text-2xl font-bold">15+</span>
+                  <span className="text-2xl font-bold">10+</span>
                 </div>
                 <p className="text-gray-300 text-sm">Years Experience</p>
               </div>

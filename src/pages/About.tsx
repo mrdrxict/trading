@@ -1,13 +1,14 @@
 import React from 'react';
 import { Trophy, Target, BookOpen, Users, Award, TrendingUp, BarChart3, Globe, Star, Calendar, CheckCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   const achievements = [
     {
       icon: <Trophy className="text-yellow-500" size={32} />,
-      title: "15+ Years Experience",
-      description: "Professional trading across all major markets since 2008"
+      title: "10+ Years Experience",
+      description: "Professional trading across all major markets since 2013"
     },
     {
       icon: <Users className="text-yellow-500" size={32} />,
@@ -28,87 +29,87 @@ const About = () => {
 
   const timeline = [
     {
-      year: "2008",
+      year: "2013",
       title: "Trading Journey Begins",
-      description: "Started as a retail trader during the financial crisis, learning the fundamentals of market analysis."
-    },
-    {
-      year: "2012",
-      title: "Goldman Sachs",
-      description: "Joined Goldman Sachs as a Senior Trader, managing institutional portfolios worth millions."
+      description: "Started as a retail trader, learning the fundamentals of market analysis."
     },
     {
       year: "2015",
-      title: "CFA & CMT Certification",
-      description: "Achieved Chartered Financial Analyst and Chartered Market Technician certifications."
+      title: "First Prop Firm Challenge",
+      description: "Passed first prop firm evaluation and received funded account."
     },
     {
-      year: "2018",
-      title: "Independent Trading",
-      description: "Left Goldman Sachs to focus on independent trading and education."
+      year: "2017",
+      title: "FTMO Certification",
+      description: "Achieved FTMO certification with $200K funded account."
     },
     {
-      year: "2020",
-      title: "Published Author",
-      description: "Released 'Advanced Trading Strategies' - became Amazon bestseller in finance category."
+      year: "2019",
+      title: "My Forex Funds",
+      description: "Secured $100K funded account with My Forex Funds."
     },
     {
       year: "2021",
       title: "Gary Robinson Trading",
       description: "Founded comprehensive trading education platform, helping thousands achieve financial freedom."
+    },
+    {
+      year: "2023",
+      title: "Multiple Funded Accounts",
+      description: "Successfully managing multiple prop firm accounts totaling over $500K."
     }
   ];
 
   const certifications = [
     {
-      name: "Chartered Financial Analyst (CFA)",
-      issuer: "CFA Institute",
-      year: "2015",
-      description: "Global standard for investment analysis and portfolio management"
+      name: "FTMO Funded Trader",
+      issuer: "FTMO",
+      year: "2017",
+      description: "$200,000 funded account"
     },
     {
-      name: "Chartered Market Technician (CMT)",
-      issuer: "CMT Association",
-      year: "2015",
-      description: "Professional certification in technical analysis and market behavior"
+      name: "My Forex Funds",
+      issuer: "MFF",
+      year: "2019",
+      description: "$100,000 funded account"
     },
     {
-      name: "Financial Risk Manager (FRM)",
-      issuer: "GARP",
-      year: "2014",
-      description: "Global certification in financial risk management"
+      name: "The5%ers",
+      issuer: "The5%ers",
+      year: "2020",
+      description: "$50,000 funded account"
     },
     {
-      name: "Series 7 & 63",
-      issuer: "FINRA",
-      year: "2012",
-      description: "Securities industry licenses for investment advisory services"
+      name: "TopstepTrader",
+      issuer: "Topstep",
+      year: "2021",
+      description: "$150,000 funded account"
     }
   ];
 
-  const mediaAppearances = [
+  const propFirms = [
     {
-      outlet: "CNBC",
-      show: "Squawk Box",
-      topic: "Forex Market Analysis",
+      firm: "FTMO",
+      role: "Funded Trader",
+      topic: "$200K Account",
       date: "2023"
     },
     {
-      outlet: "Bloomberg",
-      show: "Market Watch",
-      topic: "Cryptocurrency Trading",
+      firm: "My Forex Funds",
+      role: "Funded Trader",
+      topic: "$100K Account",
       date: "2023"
     },
     {
-      outlet: "Fox Business",
-      show: "Mornings with Maria",
-      topic: "Futures Trading Strategies",
+      firm: "The5%ers",
+      role: "Funded Trader",
+      topic: "$50K Account",
       date: "2022"
     },
     {
-      outlet: "BBC News",
-      show: "Business Live",
-      topic: "UK Market Outlook",
+      firm: "TopstepTrader",
+      role: "Funded Trader",
+      topic: "$150K Account",
       date: "2022"
     }
   ];
@@ -125,23 +126,17 @@ const About = () => {
               </h1>
               <div className="w-20 h-1 bg-yellow-500 mb-6"></div>
               <p className="text-xl text-gray-200 mb-8">
-                A seasoned professional trader with over 15 years of experience, helping thousands achieve financial independence through proven trading strategies.
+                A seasoned professional trader with over 10 years of experience, helping thousands achieve financial independence through proven trading strategies.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  variant="secondary" 
-                  size="lg"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Book Consultation
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="border-white text-white hover:bg-white hover:text-blue-900"
-                >
-                  Download CV
-                </Button>
+                <Link to="/contact">
+                  <Button 
+                    variant="secondary" 
+                    size="lg"
+                  >
+                    Book Consultation
+                  </Button>
+                </Link>
               </div>
             </div>
             
@@ -156,7 +151,7 @@ const About = () => {
               
               <div className="absolute -bottom-6 -right-6 bg-yellow-500 text-blue-900 py-3 px-6 rounded-lg shadow-lg font-bold">
                 <div className="text-center">
-                  <div className="text-lg">CFA, CMT</div>
+                  <div className="text-lg">FTMO, MFF</div>
                   <div className="text-xs">Certified</div>
                 </div>
               </div>
@@ -174,7 +169,7 @@ const About = () => {
             </h2>
             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              From Wall Street to independent trading, Gary's journey spans institutional finance and retail education
+              From retail trading to prop firm success, Gary's journey spans multiple markets and trading styles
             </p>
           </div>
 
@@ -243,7 +238,7 @@ const About = () => {
             </h2>
             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              A journey from retail trader to institutional expert and educator
+              A journey from retail trader to prop firm expert and educator
             </p>
           </div>
 
@@ -273,11 +268,11 @@ const About = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
-              Professional Certifications
+              Prop Firm Certifications
             </h2>
             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              Industry-recognized credentials demonstrating expertise and commitment to professional standards
+              Successfully funded accounts with leading proprietary trading firms
             </p>
           </div>
 
@@ -300,30 +295,30 @@ const About = () => {
         </div>
       </section>
 
-      {/* Media Appearances */}
+      {/* Prop Firms We Work With */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
-              Media Appearances
+              Prop Firms We Work With
             </h2>
             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              Featured expert commentary on major financial networks and publications
+              Partnered with leading proprietary trading firms to help our students get funded
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {mediaAppearances.map((appearance, index) => (
+            {propFirms.map((firm, index) => (
               <div key={index} className="bg-white rounded-xl p-6 shadow-md text-center">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Globe className="text-blue-900" size={32} />
                 </div>
-                <h3 className="font-bold text-blue-900 mb-1">{appearance.outlet}</h3>
-                <p className="text-gray-600 text-sm mb-2">{appearance.show}</p>
-                <p className="text-gray-700 text-sm mb-2">{appearance.topic}</p>
+                <h3 className="font-bold text-blue-900 mb-1">{firm.firm}</h3>
+                <p className="text-gray-600 text-sm mb-2">{firm.role}</p>
+                <p className="text-gray-700 text-sm mb-2">{firm.topic}</p>
                 <span className="bg-yellow-500 text-blue-900 px-2 py-1 rounded text-xs font-bold">
-                  {appearance.date}
+                  {firm.date}
                 </span>
               </div>
             ))}
@@ -331,19 +326,19 @@ const About = () => {
 
           {/* Speaking Engagements */}
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold text-blue-900 mb-6 text-center">Speaking Engagements</h3>
+            <h3 className="text-2xl font-bold text-blue-900 mb-6 text-center">Prop Firm Success</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-900 mb-2">25+</div>
-                <p className="text-gray-600">Trading Conferences</p>
+                <div className="text-3xl font-bold text-blue-900 mb-2">15+</div>
+                <p className="text-gray-600">Funded Accounts</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-900 mb-2">50+</div>
-                <p className="text-gray-600">Webinars Hosted</p>
+                <div className="text-3xl font-bold text-blue-900 mb-2">$1M+</div>
+                <p className="text-gray-600">Total Funding</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-900 mb-2">100+</div>
-                <p className="text-gray-600">Educational Sessions</p>
+                <p className="text-gray-600">Students Funded</p>
               </div>
             </div>
           </div>
@@ -361,16 +356,20 @@ const About = () => {
               Join thousands of successful traders who have transformed their financial future with Gary's proven strategies and mentorship.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
-                View Courses
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                Book Free Consultation
-              </Button>
+              <Link to="/courses">
+                <Button variant="secondary" size="lg">
+                  View Courses
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-white text-white hover:bg-white hover:text-blue-900"
+                >
+                  Book Consultation
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

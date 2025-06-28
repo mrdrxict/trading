@@ -19,8 +19,8 @@ const Courses = () => {
     {
       id: "beginner-package",
       name: "Beginner Package",
-      price: 997,
-      originalPrice: 1297,
+      price: 200,
+      originalPrice: 300,
       duration: "8 Weeks",
       students: "500+",
       rating: 4.9,
@@ -47,8 +47,8 @@ const Courses = () => {
     {
       id: "advanced-package",
       name: "Advanced Package",
-      price: 1997,
-      originalPrice: 2497,
+      price: 350,
+      originalPrice: 450,
       duration: "12 Weeks",
       students: "300+",
       rating: 4.9,
@@ -76,8 +76,8 @@ const Courses = () => {
     {
       id: "elite-package",
       name: "Elite Package",
-      price: 2997,
-      originalPrice: 3997,
+      price: 500,
+      originalPrice: 650,
       duration: "16 Weeks",
       students: "100+",
       rating: 5.0,

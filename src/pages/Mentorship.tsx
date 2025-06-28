@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Check, Calendar, Users, Video, MessageCircle, BarChart3, Target, Star, Clock, Award } from 'lucide-react';
 import Button from '../components/ui/Button';
 import PaymentModal from '../components/payment/PaymentModal';
+import { Link } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -20,7 +21,7 @@ const Mentorship = () => {
     {
       id: 'monthly',
       name: "Monthly Mentorship",
-      price: 499,
+      price: 100,
       period: "per month",
       description: "Perfect for traders who want regular guidance and support",
       commitment: "Month-to-month",
@@ -54,10 +55,10 @@ const Mentorship = () => {
     {
       id: 'quarterly',
       name: "Quarterly Mentorship",
-      price: 1299,
+      price: 250,
       period: "per quarter",
-      savings: "Save £198",
-      originalPrice: 1497,
+      savings: "Save $50",
+      originalPrice: 300,
       description: "Intensive 3-month program for accelerated growth",
       commitment: "3-month commitment",
       features: [
@@ -92,10 +93,10 @@ const Mentorship = () => {
     {
       id: 'annual',
       name: "Annual Mentorship",
-      price: 3997,
+      price: 1200,
       period: "per year",
-      savings: "Save £2,391",
-      originalPrice: 6388,
+      savings: "Save $300",
+      originalPrice: 1500,
       description: "Complete transformation program for serious traders",
       commitment: "12-month commitment",
       features: [
@@ -302,13 +303,13 @@ const Mentorship = () => {
                   
                   <div className="mb-4">
                     <div className="flex items-end mb-1">
-                      <span className="text-3xl font-bold text-blue-900">£{program.price}</span>
+                      <span className="text-3xl font-bold text-blue-900">${program.price}</span>
                       <span className="text-gray-600 ml-2">{program.period}</span>
                     </div>
                     {program.savings && (
                       <div className="flex items-center gap-2">
                         <span className="text-green-600 font-medium text-sm">{program.savings}</span>
-                        <span className="text-gray-500 line-through text-sm">£{program.originalPrice}</span>
+                        <span className="text-gray-500 line-through text-sm">${program.originalPrice}</span>
                       </div>
                     )}
                     <div className="text-sm text-gray-600 mt-1">{program.commitment}</div>
@@ -342,7 +343,7 @@ const Mentorship = () => {
                       handlePurchase(program);
                     }}
                   >
-                    Buy Now - £{program.price}
+                    Buy Now - ${program.price}
                   </Button>
                   
                   <p className="text-xs text-gray-500 text-center mt-3">
@@ -564,13 +565,15 @@ const Mentorship = () => {
               >
                 Start Mentorship Now
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                Schedule Free Consultation
-              </Button>
+              <Link to="/contact">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-white text-white hover:bg-white hover:text-blue-900"
+                >
+                  Schedule Consultation
+                </Button>
+              </Link>
             </div>
             
             <div className="mt-8 text-sm text-gray-300">

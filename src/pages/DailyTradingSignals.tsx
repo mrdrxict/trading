@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TrendingUp, TrendingDown, Clock, Target, Star, CheckCircle, Users, BarChart3, Signal, Bell, Download, Play } from 'lucide-react';
+import { TrendingUp, TrendingDown, Clock, Target, Star, CheckCircle, Users, BarChart3, Signal, Bell } from 'lucide-react';
 import Button from '../components/ui/Button';
 import PaymentModal from '../components/payment/PaymentModal';
 
@@ -158,7 +158,7 @@ const DailyTradingSignals = () => {
   const testimonials = [
     {
       name: "Sarah Mitchell",
-      result: "+£12,450 in 3 months",
+      result: "+$12,450 in 3 months",
       quote: "Gary's signals have completely transformed my trading. The detailed analysis helps me understand the 'why' behind each trade.",
       image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
@@ -334,7 +334,7 @@ const DailyTradingSignals = () => {
                 
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-blue-900 mb-2">{pkg.name}</h3>
-                  <div className="text-3xl font-bold text-blue-900 mb-2">£{pkg.price}</div>
+                  <div className="text-3xl font-bold text-blue-900 mb-2">${pkg.price}</div>
                   <div className="text-gray-600 mb-4">{pkg.period}</div>
                   <p className="text-gray-600 mb-6">{pkg.description}</p>
                   
@@ -368,7 +368,7 @@ const DailyTradingSignals = () => {
                     size="lg"
                     onClick={() => handlePurchase(pkg)}
                   >
-                    Buy Now - £{pkg.price}
+                    Buy Now - ${pkg.price}
                   </Button>
                   
                   <p className="text-xs text-gray-500 text-center mt-3">
@@ -515,15 +515,7 @@ const DailyTradingSignals = () => {
                 size="lg"
                 onClick={() => handlePurchase(signalPackages.find(pkg => pkg.id === 'premium-signals'))}
               >
-                Start 7-Day Free Trial
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                <Play className="mr-2" size={16} />
-                Watch Demo Video
+                Get Started
               </Button>
             </div>
             

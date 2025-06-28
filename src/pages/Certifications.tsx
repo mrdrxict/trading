@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Award, CheckCircle, Clock, Users, BookOpen, Download, Star, Trophy, Target, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 const Certifications = () => {
   const [garyCurrentIndex, setGaryCurrentIndex] = useState(0);
@@ -192,33 +193,6 @@ const Certifications = () => {
 
   const currentGaryCert = garyCertifications[garyCurrentIndex];
   const currentStudentCert = studentCertifications[studentsCurrentIndex];
-
-  const additionalCertifications = [
-    {
-      name: "Certified Financial Analyst (CFA)",
-      issuer: "CFA Institute",
-      year: "2015",
-      description: "Global standard for investment analysis and portfolio management"
-    },
-    {
-      name: "Chartered Market Technician (CMT)",
-      issuer: "CMT Association",
-      year: "2015",
-      description: "Professional certification in technical analysis and market behavior"
-    },
-    {
-      name: "Financial Risk Manager (FRM)",
-      issuer: "GARP",
-      year: "2014",
-      description: "Global certification in financial risk management"
-    },
-    {
-      name: "Series 7 & 63",
-      issuer: "FINRA",
-      year: "2012",
-      description: "Securities industry licenses for investment advisory services"
-    }
-  ];
 
   const successMetrics = [
     {
@@ -463,38 +437,6 @@ const Certifications = () => {
         </div>
       </section>
 
-      {/* Additional Professional Certifications */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-900 mb-4">
-              Professional Certifications
-            </h2>
-            <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-              Industry-recognized credentials demonstrating expertise and commitment to professional standards
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {additionalCertifications.map((cert, index) => (
-              <div key={index} className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200 hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-blue-900 text-lg mb-1">{cert.name}</h3>
-                    <p className="text-blue-700 font-medium">{cert.issuer}</p>
-                  </div>
-                  <div className="bg-yellow-500 text-blue-900 px-3 py-1 rounded-full text-sm font-bold">
-                    {cert.year}
-                  </div>
-                </div>
-                <p className="text-gray-700">{cert.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Call to Action */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-blue-900 to-blue-800 text-white">
         <div className="container mx-auto px-4 md:px-6">
@@ -506,16 +448,20 @@ const Certifications = () => {
               Join Gary's proven mentorship program and learn the exact strategies that have helped him and 50+ students secure prop firm funding.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
-                Start Mentorship Program
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                View Success Strategies
-              </Button>
+              <Link to="/mentorship">
+                <Button variant="secondary" size="lg">
+                  Start Mentorship Program
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-white text-white hover:bg-white hover:text-blue-900"
+                >
+                  View Success Stories
+                </Button>
+              </Link>
             </div>
             
             <div className="mt-8 text-sm text-gray-300">

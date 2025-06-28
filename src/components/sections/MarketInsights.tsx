@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, TrendingUp, BarChart3, ArrowRight, Clock } from 'lucide-react';
 import Button from '../ui/Button';
 
 const MarketInsights = () => {
+  const [marketData, setMarketData] = useState([
+    { pair: "EUR/USD", price: "1.0892", change: "+0.23%", trend: "up" },
+    { pair: "GBP/USD", price: "1.2654", change: "-0.15%", trend: "down" },
+    { pair: "USD/JPY", price: "148.75", change: "+0.41%", trend: "up" },
+    { pair: "BTC/USD", price: "42,150", change: "+2.34%", trend: "up" },
+    { pair: "Gold", price: "2,018", change: "+0.67%", trend: "up" },
+    { pair: "S&P 500", price: "4,785", change: "+0.89%", trend: "up" }
+  ]);
+
   const insights = [
     {
       title: "EUR/USD Technical Analysis: Key Levels to Watch",
@@ -30,14 +39,52 @@ const MarketInsights = () => {
     }
   ];
 
-  const marketData = [
-    { pair: "EUR/USD", price: "1.0892", change: "+0.23%", trend: "up" },
-    { pair: "GBP/USD", price: "1.2654", change: "-0.15%", trend: "down" },
-    { pair: "USD/JPY", price: "148.75", change: "+0.41%", trend: "up" },
-    { pair: "BTC/USD", price: "42,150", change: "+2.34%", trend: "up" },
-    { pair: "Gold", price: "2,018", change: "+0.67%", trend: "up" },
-    { pair: "S&P 500", price: "4,785", change: "+0.89%", trend: "up" }
-  ];
+  // Function to update market data with random changes
+  const updateMarketData = () => {
+    const updatedData = marketData.map(item => {
+      // Generate a random price change
+      const changePercent = (Math.random() * 0.5 - 0.25).toFixed(2);
+      const isPositive = Math.random() > 0.4; // 60% chance of positive change
+      
+      // Calculate new price based on current price and change
+      let currentPrice = parseFloat(item.price.replace(/,/g, ''));
+      const change = currentPrice * (parseFloat(changePercent) / 100);
+      currentPrice = isPositive ? currentPrice + Math.abs(change) : currentPrice - Math.abs(change);
+      
+      // Format the price based on the pair
+      let formattedPrice;
+      if (item.pair === "BTC/USD") {
+        formattedPrice = Math.round(currentPrice).toLocaleString();
+      } else if (item.pair === "S&P 500") {
+        formattedPrice = Math.round(currentPrice).toLocaleString();
+      } else if (item.pair === "Gold") {
+        formattedPrice = Math.round(currentPrice).toLocaleString();
+      } else {
+        formattedPrice = currentPrice.toFixed(4);
+      }
+      
+      return {
+        ...item,
+        price: formattedPrice,
+        change: `${isPositive ? '+' : '-'}${Math.abs(parseFloat(changePercent)).toFixed(2)}%`,
+        trend: isPositive ? 'up' : 'down'
+      };
+    });
+    
+    setMarketData(updatedData);
+  };
+
+  // Update market data every 10 minutes
+  useEffect(() => {
+    // Initial update
+    updateMarketData();
+    
+    // Set interval for updates (10 minutes = 600000 ms)
+    const interval = setInterval(updateMarketData, 600000);
+    
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="py-16 md:py-24 bg-gray-50">

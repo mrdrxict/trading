@@ -6,7 +6,7 @@ const Mentorship = () => {
   const programs = [
     {
       name: "Monthly Mentorship",
-      price: 499,
+      price: 100,
       period: "per month",
       description: "Perfect for traders who want regular guidance and support",
       features: [
@@ -29,9 +29,9 @@ const Mentorship = () => {
     },
     {
       name: "Quarterly Mentorship",
-      price: 1299,
+      price: 250,
       period: "per quarter",
-      savings: "Save $198",
+      savings: "Save $50",
       description: "Intensive 3-month program for accelerated growth",
       features: [
         "8 x 1-on-1 Sessions per Quarter (60 min each)",
@@ -54,9 +54,9 @@ const Mentorship = () => {
     },
     {
       name: "Annual Mentorship",
-      price: 3997,
+      price: 1200,
       period: "per year",
-      savings: "Save $2,391",
+      savings: "Save $300",
       description: "Complete transformation program for serious traders",
       features: [
         "36 x 1-on-1 Sessions per Year (60 min each)",

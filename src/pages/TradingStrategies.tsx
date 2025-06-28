@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TrendingUp, BarChart3, Target, Shield, Clock, Star, Download, Play, Filter, Search, ChevronDown, ChevronUp } from 'lucide-react';
 import Button from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 const TradingStrategies = () => {
   const [selectedMarket, setSelectedMarket] = useState('all');
@@ -411,9 +412,11 @@ const TradingStrategies = () => {
                     <span className="capitalize">{strategy.timeframe}</span>
                   </div>
                   
-                  <Button variant="secondary" fullWidth>
-                    View Strategy Details
-                  </Button>
+                  <Link to="/contact">
+                    <Button variant="secondary" fullWidth>
+                      View Strategy Details
+                    </Button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -532,14 +535,18 @@ const TradingStrategies = () => {
                   
                   <div className="flex items-center justify-between">
                     <div className="flex gap-4">
-                      <Button variant="secondary" size="sm">
-                        <Download className="mr-2" size={16} />
-                        Download Guide
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Play className="mr-2" size={16} />
-                        Watch Tutorial
-                      </Button>
+                      <Link to="/contact">
+                        <Button variant="secondary" size="sm">
+                          <Download className="mr-2" size={16} />
+                          Download Guide
+                        </Button>
+                      </Link>
+                      <Link to="/contact">
+                        <Button variant="outline" size="sm">
+                          <Play className="mr-2" size={16} />
+                          Watch Tutorial
+                        </Button>
+                      </Link>
                     </div>
                     
                     <button
@@ -661,30 +668,36 @@ const TradingStrategies = () => {
               <Target className="text-blue-900 mx-auto mb-4" size={48} />
               <h3 className="font-bold text-blue-900 mb-3">Strategy Analysis</h3>
               <p className="text-gray-700 mb-4">Comprehensive analysis of your current trading approach and identification of improvement areas.</p>
-              <div className="text-2xl font-bold text-blue-900 mb-4">£497</div>
-              <Button variant="outline" fullWidth>
-                Get Analysis
-              </Button>
+              <div className="text-2xl font-bold text-blue-900 mb-4">$497</div>
+              <Link to="/contact">
+                <Button variant="outline" fullWidth>
+                  Get Analysis
+                </Button>
+              </Link>
             </div>
             
             <div className="bg-white rounded-xl p-6 shadow-lg text-center border-2 border-yellow-500">
               <BarChart3 className="text-blue-900 mx-auto mb-4" size={48} />
               <h3 className="font-bold text-blue-900 mb-3">Custom Development</h3>
               <p className="text-gray-700 mb-4">Complete custom strategy development with backtesting and optimization for your specific needs.</p>
-              <div className="text-2xl font-bold text-blue-900 mb-4">£1,997</div>
-              <Button variant="secondary" fullWidth>
-                Start Development
-              </Button>
+              <div className="text-2xl font-bold text-blue-900 mb-4">$1,997</div>
+              <Link to="/contact">
+                <Button variant="secondary" fullWidth>
+                  Start Development
+                </Button>
+              </Link>
             </div>
             
             <div className="bg-white rounded-xl p-6 shadow-lg text-center">
               <TrendingUp className="text-blue-900 mx-auto mb-4" size={48} />
               <h3 className="font-bold text-blue-900 mb-3">Strategy Coaching</h3>
               <p className="text-gray-700 mb-4">Ongoing coaching and refinement of your trading strategies with monthly reviews.</p>
-              <div className="text-2xl font-bold text-blue-900 mb-4">£299/month</div>
-              <Button variant="outline" fullWidth>
-                Start Coaching
-              </Button>
+              <div className="text-2xl font-bold text-blue-900 mb-4">$299/month</div>
+              <Link to="/contact">
+                <Button variant="outline" fullWidth>
+                  Start Coaching
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -701,16 +714,20 @@ const TradingStrategies = () => {
               Join our comprehensive courses to learn how to implement and optimize these proven trading strategies.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
-                View Trading Courses
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                Get Personal Mentorship
-              </Button>
+              <Link to="/courses">
+                <Button variant="secondary" size="lg">
+                  View Trading Courses
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-white text-white hover:bg-white hover:text-blue-900"
+                >
+                  Get Personal Mentorship
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

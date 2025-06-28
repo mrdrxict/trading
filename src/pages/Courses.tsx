@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Star, Clock, Users, BookOpen, Award, Play, Download, Target, TrendingUp } from 'lucide-react';
+import { Check, Star, Clock, Users, BookOpen, Award, Target, TrendingUp } from 'lucide-react';
 import Button from '../components/ui/Button';
 import PaymentModal from '../components/payment/PaymentModal';
 
@@ -28,8 +28,8 @@ const Courses = () => {
       id: 'forex-fundamentals',
       name: "Forex Trading Fundamentals",
       category: "beginner",
-      price: 497,
-      originalPrice: 697,
+      price: 200,
+      originalPrice: 300,
       duration: "6 Weeks",
       students: "1,200+",
       rating: 4.9,
@@ -87,8 +87,8 @@ const Courses = () => {
       id: 'crypto-trading-mastery',
       name: "Cryptocurrency Trading Mastery",
       category: "beginner",
-      price: 597,
-      originalPrice: 797,
+      price: 497,
+      originalPrice: 597,
       duration: "8 Weeks",
       students: "800+",
       rating: 4.8,
@@ -146,8 +146,8 @@ const Courses = () => {
       id: 'advanced-technical-analysis',
       name: "Advanced Technical Analysis",
       category: "intermediate",
-      price: 897,
-      originalPrice: 1197,
+      price: 600,
+      originalPrice: 700,
       duration: "10 Weeks",
       students: "600+",
       rating: 4.9,
@@ -205,8 +205,8 @@ const Courses = () => {
       id: 'futures-trading-strategies',
       name: "Futures Trading Strategies",
       category: "intermediate",
-      price: 997,
-      originalPrice: 1297,
+      price: 500,
+      originalPrice: 600,
       duration: "12 Weeks",
       students: "400+",
       rating: 4.8,
@@ -264,8 +264,8 @@ const Courses = () => {
       id: 'professional-trading-psychology',
       name: "Professional Trading Psychology",
       category: "advanced",
-      price: 1197,
-      originalPrice: 1597,
+      price: 500,
+      originalPrice: 600,
       duration: "8 Weeks",
       students: "300+",
       rating: 5.0,
@@ -323,8 +323,8 @@ const Courses = () => {
       id: 'algorithmic-trading-development',
       name: "Algorithmic Trading Development",
       category: "advanced",
-      price: 1497,
-      originalPrice: 1997,
+      price: 600,
+      originalPrice: 700,
       duration: "16 Weeks",
       students: "200+",
       rating: 4.9,
@@ -518,10 +518,10 @@ const Courses = () => {
                   
                   <div className="mb-4">
                     <div className="flex items-end mb-2">
-                      <span className="text-3xl font-bold text-blue-900">£{course.price}</span>
-                      <span className="text-gray-500 line-through ml-2">£{course.originalPrice}</span>
+                      <span className="text-3xl font-bold text-blue-900">${course.price}</span>
+                      <span className="text-gray-500 line-through ml-2">${course.originalPrice}</span>
                       <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold ml-2">
-                        Save £{course.originalPrice - course.price}
+                        Save ${course.originalPrice - course.price}
                       </span>
                     </div>
                     <div className="flex items-center text-sm text-gray-600 space-x-4">
@@ -578,20 +578,14 @@ const Courses = () => {
                     </ul>
                   </div>
                   
-                  <div className="flex gap-3">
-                    <Button 
-                      variant={course.popular ? "secondary" : "primary"}
-                      fullWidth
-                      size="lg"
-                      onClick={() => handlePurchase(course)}
-                    >
-                      Buy Now - £{course.price}
-                    </Button>
-                    <Button variant="outline">
-                      <Play className="mr-2" size={16} />
-                      Preview
-                    </Button>
-                  </div>
+                  <Button 
+                    variant={course.popular ? "secondary" : "primary"}
+                    fullWidth
+                    size="lg"
+                    onClick={() => handlePurchase(course)}
+                  >
+                    Buy Now - ${course.price}
+                  </Button>
                   
                   <p className="text-xs text-gray-500 text-center mt-3">
                     30-day money-back guarantee • Lifetime access
@@ -619,7 +613,7 @@ const Courses = () => {
                 <Award className="text-blue-900" size={32} />
               </div>
               <h3 className="font-bold text-blue-900 mb-3">Expert Instruction</h3>
-              <p className="text-gray-600">Learn from Gary Robinson's 15+ years of professional trading experience and proven track record.</p>
+              <p className="text-gray-600">Learn from Gary Robinson's 10+ years of professional trading experience and proven track record.</p>
             </div>
             
             <div className="text-center">
@@ -686,19 +680,12 @@ const Courses = () => {
                 onClick={() => handlePurchase({
                   id: 'beginner-bundle',
                   name: 'Beginner Trading Bundle',
-                  price: 997,
+                  price: 200,
                   description: 'Complete beginner package with all essential trading courses',
                   type: 'course'
                 })}
               >
                 Get Started Now
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-white text-white hover:bg-white hover:text-blue-900"
-              >
-                Free Course Preview
               </Button>
             </div>
           </div>

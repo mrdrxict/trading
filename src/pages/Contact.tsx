@@ -22,13 +22,13 @@ const Contact = () => {
 
   const packageOptions = [
     { value: '', label: 'Select your interest' },
-    { value: 'beginner-course', label: 'Beginner Course ($997)' },
-    { value: 'advanced-course', label: 'Advanced Course ($1,997)' },
-    { value: 'elite-course', label: 'Elite Course ($2,997)' },
-    { value: 'monthly-mentorship', label: 'Monthly Mentorship ($499/month)' },
-    { value: 'quarterly-mentorship', label: 'Quarterly Mentorship ($1,299/quarter)' },
-    { value: 'annual-mentorship', label: 'Annual Mentorship ($3,997/year)' },
-    { value: 'consultation', label: 'Free Consultation' },
+    { value: 'beginner-course', label: 'Beginner Course ($200)' },
+    { value: 'advanced-course', label: 'Advanced Course ($350)' },
+    { value: 'elite-course', label: 'Elite Course ($500)' },
+    { value: 'monthly-mentorship', label: 'Monthly Mentorship ($100/month)' },
+    { value: 'quarterly-mentorship', label: 'Quarterly Mentorship ($250/quarter)' },
+    { value: 'annual-mentorship', label: 'Annual Mentorship ($1,200/year)' },
+    { value: 'consultation', label: 'One-on-One Consultation ($50)' },
     { value: 'other', label: 'Other - Please specify in message' }
   ];
 
@@ -130,13 +130,6 @@ const Contact = () => {
       phone: '+44 20 7123 4567',
       email: 'london@garyrobinsontrading.com',
       hours: 'Mon-Fri, 9 AM - 6 PM GMT'
-    },
-    {
-      city: 'New York',
-      address: '456 Wall Street, New York, NY 10005, USA',
-      phone: '+1 (212) 555-0123',
-      email: 'newyork@garyrobinsontrading.com',
-      hours: 'Mon-Fri, 9 AM - 6 PM EST'
     }
   ];
 
@@ -331,7 +324,7 @@ const Contact = () => {
             {/* Office Information */}
             <div>
               <h2 className="text-3xl font-bold text-blue-900 mb-6">
-                Our Offices
+                Our Office
               </h2>
               
               <div className="space-y-6">

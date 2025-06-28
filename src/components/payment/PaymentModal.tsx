@@ -150,7 +150,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, product })
             <p className="text-gray-700 text-sm mb-3">{product.description}</p>
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-600">Total:</span>
-              <span className="text-2xl font-bold text-blue-900">£{product.price}</span>
+              <span className="text-2xl font-bold text-blue-900">${product.price}</span>
             </div>
           </div>
 
@@ -278,7 +278,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, product })
                       Processing...
                     </>
                   ) : (
-                    `Pay £${product.price}`
+                    `Pay $${product.price}`
                   )}
                 </Button>
               </div>
