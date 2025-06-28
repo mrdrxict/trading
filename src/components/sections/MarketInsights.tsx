@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom';
 
 const MarketInsights = () => {
   const [marketData, setMarketData] = useState([
-    { pair: "EUR/USD", price: "1.0892", change: "+0.23%", trend: "up" },
-    { pair: "GBP/USD", price: "1.2654", change: "-0.15%", trend: "down" },
-    { pair: "USD/JPY", price: "148.75", change: "+0.41%", trend: "up" },
-    { pair: "BTC/USD", price: "42,150", change: "+2.34%", trend: "up" },
-    { pair: "Gold", price: "2,018", change: "+0.67%", trend: "up" },
-    { pair: "S&P 500", price: "4,785", change: "+0.89%", trend: "up" }
+    { pair: "EUR/USD", price: "1.0721", change: "+0.15%", trend: "up" },
+    { pair: "GBP/USD", price: "1.2683", change: "-0.12%", trend: "down" },
+    { pair: "USD/JPY", price: "151.62", change: "+0.23%", trend: "up" },
+    { pair: "BTC/USD", price: "67,245", change: "+1.87%", trend: "up" },
+    { pair: "Gold", price: "2,336", change: "+0.42%", trend: "up" },
+    { pair: "S&P 500", price: "5,234", change: "+0.65%", trend: "up" }
   ]);
 
   const insights = [
     {
       title: "EUR/USD Technical Analysis: Key Levels to Watch",
-      excerpt: "The EUR/USD pair is approaching a critical resistance level at 1.0950. Here's what traders need to know about the upcoming price action...",
-      date: "2024-01-15",
+      excerpt: "The EUR/USD pair is approaching a critical resistance level at 1.0750. Here's what traders need to know about the upcoming price action...",
+      date: "2024-06-22",
       category: "Forex Analysis",
       readTime: "5 min read",
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -25,15 +25,15 @@ const MarketInsights = () => {
     {
       title: "Gold Futures: Inflation Hedge or Risk Asset?",
       excerpt: "With recent economic data showing mixed signals, gold futures present an interesting opportunity. Our analysis reveals key entry points...",
-      date: "2024-01-12",
+      date: "2024-06-20",
       category: "Futures Trading",
       readTime: "7 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
     {
       title: "Bitcoin's Next Move: Technical and Fundamental Outlook",
-      excerpt: "Bitcoin is consolidating near $42,000. Our comprehensive analysis combines technical patterns with fundamental drivers...",
-      date: "2024-01-10",
+      excerpt: "Bitcoin is consolidating near $67,000. Our comprehensive analysis combines technical patterns with fundamental drivers...",
+      date: "2024-06-18",
       category: "Cryptocurrency",
       readTime: "6 min read",
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
