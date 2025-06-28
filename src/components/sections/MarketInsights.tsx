@@ -15,6 +15,7 @@ const MarketInsights = () => {
 
   const insights = [
     {
+      id: 5,
       title: "EUR/USD Technical Analysis: Key Levels to Watch",
       excerpt: "The EUR/USD pair is approaching a critical resistance level at 1.0750. Here's what traders need to know about the upcoming price action...",
       date: "2024-06-22",
@@ -23,6 +24,7 @@ const MarketInsights = () => {
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
     {
+      id: 4,
       title: "Gold Futures: Inflation Hedge or Risk Asset?",
       excerpt: "With recent economic data showing mixed signals, gold futures present an interesting opportunity. Our analysis reveals key entry points...",
       date: "2024-06-20",
@@ -31,6 +33,7 @@ const MarketInsights = () => {
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     },
     {
+      id: 7,
       title: "Bitcoin's Next Move: Technical and Fundamental Outlook",
       excerpt: "Bitcoin is consolidating near $67,000. Our comprehensive analysis combines technical patterns with fundamental drivers...",
       date: "2024-06-18",
@@ -75,7 +78,7 @@ const MarketInsights = () => {
     setMarketData(updatedData);
   };
 
-  // Update market data every 10 seconds (for demo purposes)
+  // Auto-slide functionality
   useEffect(() => {
     // Initial update
     updateMarketData();
@@ -154,17 +157,19 @@ const MarketInsights = () => {
                 </div>
                 
                 <h3 className="font-bold text-blue-900 mb-3 line-clamp-2">
-                  {insight.title}
+                  <Link to={`/blog/${insight.id}`} className="hover:text-blue-700 transition-colors">
+                    {insight.title}
+                  </Link>
                 </h3>
                 
                 <p className="text-gray-600 mb-4 line-clamp-3">
                   {insight.excerpt}
                 </p>
                 
-                <button className="flex items-center text-blue-900 font-medium hover:text-blue-700 transition-colors">
+                <Link to={`/blog/${insight.id}`} className="flex items-center text-blue-900 font-medium hover:text-blue-700 transition-colors">
                   Read Full Analysis
                   <ArrowRight className="ml-1" size={16} />
-                </button>
+                </Link>
               </div>
             </article>
           ))}

@@ -14,6 +14,7 @@ import Booking from './pages/Booking';
 import MarketAnalysis from './pages/MarketAnalysis';
 import TradingCalculators from './pages/TradingCalculators';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import EducationalBlog from './pages/EducationalBlog';
 import TradingStrategies from './pages/TradingStrategies';
 import RiskManagement from './pages/RiskManagement';
@@ -44,6 +45,7 @@ function App() {
             <Route path="/market-analysis" element={<MarketAnalysis />} />
             <Route path="/trading-calculators" element={<TradingCalculators />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/educational-blog" element={<EducationalBlog />} />
             <Route path="/trading-strategies" element={<TradingStrategies />} />
             <Route path="/risk-management" element={<RiskManagement />} />

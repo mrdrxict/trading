@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Filter, Calendar, User, ArrowRight, Share2, BookOpen, TrendingUp, MessageCircle, Heart, Eye } from 'lucide-react';
 import Button from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -21,7 +22,7 @@ const Blog = () => {
       title: "The Complete Guide to Forex Trading in 2024",
       excerpt: "Everything you need to know about forex trading, from basics to advanced strategies. Learn how to navigate the world's largest financial market.",
       author: "Gary Robinson",
-      date: "2024-01-15",
+      date: "2024-06-24",
       category: "Forex Trading",
       readTime: "12 min read",
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -35,7 +36,7 @@ const Blog = () => {
       title: "Bitcoin's Technical Analysis: What the Charts Tell Us",
       excerpt: "Deep dive into Bitcoin's current technical setup and what it means for the next major price movement. Key levels to watch.",
       author: "Gary Robinson",
-      date: "2024-01-12",
+      date: "2024-06-22",
       category: "Cryptocurrency",
       readTime: "8 min read",
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -52,7 +53,7 @@ const Blog = () => {
       title: "5 Risk Management Rules Every Trader Must Follow",
       excerpt: "Protect your capital with these essential risk management principles that separate successful traders from the rest.",
       author: "Gary Robinson",
-      date: "2024-01-10",
+      date: "2024-06-20",
       category: "Trading Psychology",
       readTime: "6 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -65,7 +66,7 @@ const Blog = () => {
       title: "Gold Futures: Inflation Hedge or Risk Asset?",
       excerpt: "Analyzing gold's role in modern portfolios and how to trade gold futures effectively in different market conditions.",
       author: "Gary Robinson",
-      date: "2024-01-08",
+      date: "2024-06-18",
       category: "Futures",
       readTime: "10 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -78,7 +79,7 @@ const Blog = () => {
       title: "EUR/USD Weekly Outlook: Key Levels to Watch",
       excerpt: "Technical and fundamental analysis of the EUR/USD pair with specific entry and exit levels for the week ahead.",
       author: "Gary Robinson",
-      date: "2024-01-05",
+      date: "2024-06-16",
       category: "Market Analysis",
       readTime: "7 min read",
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -91,7 +92,7 @@ const Blog = () => {
       title: "The Psychology of Losing Trades: How to Bounce Back",
       excerpt: "Mental strategies for dealing with losses and maintaining emotional discipline in your trading journey.",
       author: "Gary Robinson",
-      date: "2024-01-03",
+      date: "2024-06-14",
       category: "Trading Psychology",
       readTime: "9 min read",
       image: "https://images.pexels.com/photos/7821906/pexels-photo-7821906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -104,7 +105,7 @@ const Blog = () => {
       title: "Cryptocurrency Market Structure: Understanding the Basics",
       excerpt: "Learn how crypto markets work, from order books to market makers, and how to use this knowledge in your trading.",
       author: "Gary Robinson",
-      date: "2024-01-01",
+      date: "2024-06-12",
       category: "Cryptocurrency",
       readTime: "11 min read",
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -117,7 +118,7 @@ const Blog = () => {
       title: "S&P 500 Futures: Trading the Index Like a Pro",
       excerpt: "Advanced strategies for trading S&P 500 futures, including session timing and key technical levels.",
       author: "Gary Robinson",
-      date: "2023-12-28",
+      date: "2024-06-10",
       category: "Futures",
       readTime: "8 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -244,10 +245,10 @@ const Blog = () => {
                         {post.comments}
                       </div>
                     </div>
-                    <button className="flex items-center text-blue-900 font-medium hover:text-blue-700 transition-colors">
+                    <Link to={`/blog/${post.id}`} className="flex items-center text-blue-900 font-medium hover:text-blue-700 transition-colors">
                       Read More
                       <ArrowRight className="ml-1" size={16} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -323,7 +324,9 @@ const Blog = () => {
                   </div>
                   
                   <h3 className="font-bold text-blue-900 mb-3 line-clamp-2">
-                    {post.title}
+                    <Link to={`/blog/${post.id}`} className="hover:text-blue-700 transition-colors">
+                      {post.title}
+                    </Link>
                   </h3>
                   
                   <p className="text-gray-600 mb-4 line-clamp-3 text-sm">
@@ -345,9 +348,9 @@ const Blog = () => {
                         {post.comments}
                       </div>
                     </div>
-                    <button className="text-blue-900 hover:text-blue-700 transition-colors">
+                    <Link to={`/blog/${post.id}`} className="text-blue-900 hover:text-blue-700 transition-colors">
                       <Share2 size={16} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </article>
