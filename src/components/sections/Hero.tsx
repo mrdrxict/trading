@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../ui/Button';
 import { TrendingUp, Award, Users, Clock, BarChart3, DollarSign } from 'lucide-react';
 import PaymentModal from '../payment/PaymentModal';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = React.useState(false);
