@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, TrendingUp, BarChart3, ArrowRight, Clock } from 'lucide-react';
 import Button from '../ui/Button';
+import { Link } from 'react-router-dom';
 
 const MarketInsights = () => {
   const [marketData, setMarketData] = useState([
@@ -39,15 +40,26 @@ const MarketInsights = () => {
     }
   ];
 
-  // Function to update market data with random changes
+  // Function to update market data with realistic changes
   const updateMarketData = () => {
+    const currentPrices = {
+      "EUR/USD": 1.0892,
+      "GBP/USD": 1.2654,
+      "USD/JPY": 148.75,
+      "BTC/USD": 42150,
+      "Gold": 2018,
+      "S&P 500": 4785
+    };
+    
     const updatedData = marketData.map(item => {
+      // Get current price as number
+      let currentPrice = currentPrices[item.pair];
+      
       // Generate a random price change
       const changePercent = (Math.random() * 0.5 - 0.25).toFixed(2);
       const isPositive = Math.random() > 0.4; // 60% chance of positive change
       
       // Calculate new price based on current price and change
-      let currentPrice = parseFloat(item.price.replace(/,/g, ''));
       const change = currentPrice * (parseFloat(changePercent) / 100);
       currentPrice = isPositive ? currentPrice + Math.abs(change) : currentPrice - Math.abs(change);
       
@@ -63,6 +75,9 @@ const MarketInsights = () => {
         formattedPrice = currentPrice.toFixed(4);
       }
       
+      // Update the current prices object for next update
+      currentPrices[item.pair] = currentPrice;
+      
       return {
         ...item,
         price: formattedPrice,
@@ -74,7 +89,7 @@ const MarketInsights = () => {
     setMarketData(updatedData);
   };
 
-  // Update market data every 10 minutes
+  // Update market data every 10 minutes (600000 ms)
   useEffect(() => {
     // Initial update
     updateMarketData();
