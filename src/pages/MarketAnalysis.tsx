@@ -25,10 +25,10 @@ const MarketAnalysis = () => {
     commodities: [
       { symbol: 'Gold', price: '2,018', change: '+0.67%', volume: '45K', trend: 'up' },
       { symbol: 'Silver', price: '23.45', change: '+1.23%', volume: '12K', trend: 'up' },
-      { symbol: 'Oil (Brent)', price: '82.35', change: '-0.34%', volume: '89K', trend: 'down' },
+      { symbol: 'Oil (Brent)', price: '78.32', change: '-0.34%', volume: '89K', trend: 'down' },
       { symbol: 'Natural Gas', price: '2.89', change: '+2.15%', volume: '23K', trend: 'up' },
-      { symbol: 'Copper', price: '4.12', change: '+0.45%', volume: '34K', trend: 'up' },
-      { symbol: 'Platinum', price: '978.50', change: '-0.12%', volume: '8K', trend: 'down' }
+      { symbol: 'Copper', price: '3.78', change: '+0.45%', volume: '34K', trend: 'up' },
+      { symbol: 'Platinum', price: '945.60', change: '-0.12%', volume: '8K', trend: 'down' }
     ],
     indices: [
       { symbol: 'FTSE 100', price: '7,485', change: '+0.89%', volume: '2.3B', trend: 'up' },
@@ -41,10 +41,10 @@ const MarketAnalysis = () => {
     crypto: [
       { symbol: 'BTC/USD', price: '42,150', change: '+2.34%', volume: '12.5B', trend: 'up' },
       { symbol: 'ETH/USD', price: '2,250', change: '+3.45%', volume: '8.9B', trend: 'up' },
-      { symbol: 'ADA/USD', price: '0.34', change: '+5.67%', volume: '2.1B', trend: 'up' },
-      { symbol: 'SOL/USD', price: '67.89', change: '+4.23%', volume: '1.8B', trend: 'up' },
-      { symbol: 'DOT/USD', price: '4.56', change: '+2.89%', volume: '890M', trend: 'up' },
-      { symbol: 'LINK/USD', price: '12.34', change: '+1.67%', volume: '1.2B', trend: 'up' }
+      { symbol: 'ADA/USD', price: '0.45', change: '+5.67%', volume: '2.1B', trend: 'up' },
+      { symbol: 'SOL/USD', price: '98.75', change: '+4.23%', volume: '1.8B', trend: 'up' },
+      { symbol: 'DOT/USD', price: '6.78', change: '+2.89%', volume: '890M', trend: 'up' },
+      { symbol: 'LINK/USD', price: '14.56', change: '+1.67%', volume: '1.2B', trend: 'up' }
     ]
   });
 
@@ -89,7 +89,7 @@ const MarketAnalysis = () => {
 
   const economicEvents = [
     {
-      time: '08:30',
+      time: '09:30',
       currency: 'GBP',
       event: 'UK GDP Growth Rate',
       impact: 'high',
@@ -97,7 +97,7 @@ const MarketAnalysis = () => {
       previous: '0.1%'
     },
     {
-      time: '13:30',
+      time: '14:30',
       currency: 'USD',
       event: 'US Non-Farm Payrolls',
       impact: 'high',
@@ -105,7 +105,7 @@ const MarketAnalysis = () => {
       previous: '175K'
     },
     {
-      time: '14:45',
+      time: '15:45',
       currency: 'EUR',
       event: 'ECB Interest Rate Decision',
       impact: 'high',
@@ -113,7 +113,7 @@ const MarketAnalysis = () => {
       previous: '4.50%'
     },
     {
-      time: '15:00',
+      time: '16:00',
       currency: 'USD',
       event: 'Federal Reserve Speech',
       impact: 'medium',
@@ -129,95 +129,70 @@ const MarketAnalysis = () => {
     crypto: { bullish: 68, bearish: 32 }
   };
 
-  // Function to update market data with realistic changes
-  const updateMarketData = () => {
-    const currentPrices = {
-      forex: {
-        'EUR/USD': 1.0892,
-        'GBP/USD': 1.2654,
-        'USD/JPY': 148.75,
-        'USD/CHF': 0.8923,
-        'AUD/USD': 0.6789,
-        'USD/CAD': 1.3456
-      },
-      commodities: {
-        'Gold': 2018,
-        'Silver': 23.45,
-        'Oil (Brent)': 82.35,
-        'Natural Gas': 2.89,
-        'Copper': 4.12,
-        'Platinum': 978.50
-      },
-      indices: {
-        'FTSE 100': 7485,
-        'S&P 500': 4785,
-        'NASDAQ': 15234,
-        'DAX': 16789,
-        'Nikkei 225': 32456,
-        'ASX 200': 7123
-      },
-      crypto: {
-        'BTC/USD': 42150,
-        'ETH/USD': 2250,
-        'ADA/USD': 0.34,
-        'SOL/USD': 67.89,
-        'DOT/USD': 4.56,
-        'LINK/USD': 12.34
-      }
-    };
-    
-    setMarketData(prevData => {
-      const newData = { ...prevData };
-      Object.keys(newData).forEach(market => {
-        newData[market] = newData[market].map(item => {
-          // Get current price as number
-          let currentPrice = currentPrices[market][item.symbol];
+  useEffect(() => {
+    // Simulate real-time data updates
+    const interval = setInterval(() => {
+      setMarketData(prevData => {
+        const newData = { ...prevData };
+        Object.keys(newData).forEach(market => {
+          newData[market] = newData[market].map(item => {
+            const currentPrice = parseFloat(item.price.replace(/,/g, ''));
+            const changePercent = (Math.random() * 0.5 - 0.25);
+            const isPositive = Math.random() > 0.4; // 60% chance of positive change
+            
+            let newPrice = isPositive 
+              ? currentPrice * (1 + Math.abs(changePercent) / 100) 
+              : currentPrice * (1 - Math.abs(changePercent) / 100);
+            
+            // Format the price based on the symbol
+            let formattedPrice;
+            if (item.symbol === "BTC/USD" || item.symbol === "ETH/USD") {
+              formattedPrice = newPrice.toFixed(0);
+            } else if (item.symbol.includes("FTSE") || item.symbol.includes("S&P") || 
+                      item.symbol.includes("NASDAQ") || item.symbol.includes("DAX") || 
+                      item.symbol.includes("Nikkei") || item.symbol.includes("ASX")) {
+              formattedPrice = newPrice.toFixed(0);
+            } else if (item.symbol === "Gold" || item.symbol === "Silver" || 
+                      item.symbol === "Oil" || item.symbol === "Platinum") {
+              formattedPrice = newPrice.toFixed(2);
+            } else if (item.symbol.includes("ADA") || item.symbol.includes("DOT")) {
+              formattedPrice = newPrice.toFixed(2);
+            } else {
+              formattedPrice = newPrice.toFixed(4);
+            }
+            
+            return {
+              ...item,
+              price: formattedPrice,
+              change: `${isPositive ? '+' : '-'}${Math.abs(changePercent).toFixed(2)}%`,
+              trend: isPositive ? 'up' : 'down'
+            };
+          });
+        });
+        return newData;
+      });
+      
+      // Also update watchlist
+      setWatchlist(prevWatchlist => {
+        return prevWatchlist.map(item => {
+          const currentPrice = parseFloat(item.price);
+          const changePercent = (Math.random() * 0.5 - 0.25);
+          const isPositive = Math.random() > 0.4;
           
-          // Generate a random price change
-          const changePercent = (Math.random() * 0.5 - 0.25).toFixed(2);
-          const isPositive = Math.random() > 0.4; // 60% chance of positive change
-          
-          // Calculate new price based on current price and change
-          const change = currentPrice * (parseFloat(changePercent) / 100);
-          currentPrice = isPositive ? currentPrice + Math.abs(change) : currentPrice - Math.abs(change);
-          
-          // Format the price based on the market and symbol
-          let formattedPrice;
-          if (market === 'crypto' && item.symbol === 'BTC/USD') {
-            formattedPrice = Math.round(currentPrice).toLocaleString();
-          } else if (market === 'indices') {
-            formattedPrice = Math.round(currentPrice).toLocaleString();
-          } else if (market === 'commodities' && item.symbol === 'Gold') {
-            formattedPrice = Math.round(currentPrice).toLocaleString();
-          } else if (market === 'forex') {
-            formattedPrice = currentPrice.toFixed(4);
-          } else {
-            formattedPrice = currentPrice.toFixed(2);
-          }
-          
-          // Update the current prices object for next update
-          currentPrices[market][item.symbol] = currentPrice;
+          let newPrice = isPositive 
+            ? currentPrice * (1 + Math.abs(changePercent) / 100) 
+            : currentPrice * (1 - Math.abs(changePercent) / 100);
           
           return {
             ...item,
-            price: formattedPrice,
-            change: `${isPositive ? '+' : '-'}${Math.abs(parseFloat(changePercent)).toFixed(2)}%`,
+            price: newPrice.toFixed(4),
+            change: `${isPositive ? '+' : '-'}${Math.abs(changePercent).toFixed(2)}%`,
             trend: isPositive ? 'up' : 'down'
           };
         });
       });
-      return newData;
-    });
-  };
+    }, 5000);
 
-  useEffect(() => {
-    // Initial update
-    updateMarketData();
-    
-    // Set interval for updates (10 minutes = 600000 ms)
-    const interval = setInterval(updateMarketData, 600000);
-    
-    // Clean up interval on component unmount
     return () => clearInterval(interval);
   }, []);
 
@@ -544,7 +519,7 @@ const MarketAnalysis = () => {
                   size="lg"
                   className="border-white text-white hover:bg-white hover:text-blue-900"
                 >
-                  Book Analysis Session
+                  Book Free Analysis Session
                 </Button>
               </Link>
             </div>
