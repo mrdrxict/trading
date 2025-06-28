@@ -7,44 +7,44 @@ const MarketAnalysis = () => {
   const [selectedTimeframe, setSelectedTimeframe] = useState('1D');
   const [selectedMarket, setSelectedMarket] = useState('forex');
   const [watchlist, setWatchlist] = useState([
-    { symbol: 'EUR/USD', price: '1.0892', change: '+0.23%', trend: 'up' },
-    { symbol: 'GBP/USD', price: '1.2654', change: '-0.15%', trend: 'down' },
-    { symbol: 'USD/JPY', price: '148.75', change: '+0.41%', trend: 'up' },
-    { symbol: 'AUD/USD', price: '0.6789', change: '+0.12%', trend: 'up' }
+    { symbol: 'EUR/USD', price: '1.0721', change: '+0.15%', trend: 'up' },
+    { symbol: 'GBP/USD', price: '1.2683', change: '-0.12%', trend: 'down' },
+    { symbol: 'USD/JPY', price: '151.62', change: '+0.23%', trend: 'up' },
+    { symbol: 'AUD/USD', price: '0.6612', change: '+0.08%', trend: 'up' }
   ]);
 
   const [marketData, setMarketData] = useState({
     forex: [
-      { symbol: 'EUR/USD', price: '1.0892', change: '+0.23%', volume: '1.2B', trend: 'up' },
-      { symbol: 'GBP/USD', price: '1.2654', change: '-0.15%', volume: '890M', trend: 'down' },
-      { symbol: 'USD/JPY', price: '148.75', change: '+0.41%', volume: '1.1B', trend: 'up' },
-      { symbol: 'USD/CHF', price: '0.8923', change: '+0.18%', volume: '650M', trend: 'up' },
-      { symbol: 'AUD/USD', price: '0.6789', change: '+0.12%', volume: '720M', trend: 'up' },
-      { symbol: 'USD/CAD', price: '1.3456', change: '-0.08%', volume: '580M', trend: 'down' }
+      { symbol: 'EUR/USD', price: '1.0721', change: '+0.15%', volume: '1.2B', trend: 'up' },
+      { symbol: 'GBP/USD', price: '1.2683', change: '-0.12%', volume: '890M', trend: 'down' },
+      { symbol: 'USD/JPY', price: '151.62', change: '+0.23%', volume: '1.1B', trend: 'up' },
+      { symbol: 'USD/CHF', price: '0.8976', change: '+0.11%', volume: '650M', trend: 'up' },
+      { symbol: 'AUD/USD', price: '0.6612', change: '+0.08%', volume: '720M', trend: 'up' },
+      { symbol: 'USD/CAD', price: '1.3642', change: '-0.05%', volume: '580M', trend: 'down' }
     ],
     commodities: [
-      { symbol: 'Gold', price: '2,018', change: '+0.67%', volume: '45K', trend: 'up' },
-      { symbol: 'Silver', price: '23.45', change: '+1.23%', volume: '12K', trend: 'up' },
-      { symbol: 'Oil (Brent)', price: '78.32', change: '-0.34%', volume: '89K', trend: 'down' },
-      { symbol: 'Natural Gas', price: '2.89', change: '+2.15%', volume: '23K', trend: 'up' },
-      { symbol: 'Copper', price: '3.78', change: '+0.45%', volume: '34K', trend: 'up' },
-      { symbol: 'Platinum', price: '945.60', change: '-0.12%', volume: '8K', trend: 'down' }
+      { symbol: 'Gold', price: '2,336', change: '+0.42%', volume: '45K', trend: 'up' },
+      { symbol: 'Silver', price: '29.87', change: '+0.78%', volume: '12K', trend: 'up' },
+      { symbol: 'Oil (Brent)', price: '85.76', change: '-0.21%', volume: '89K', trend: 'down' },
+      { symbol: 'Natural Gas', price: '2.92', change: '+1.45%', volume: '23K', trend: 'up' },
+      { symbol: 'Copper', price: '4.52', change: '+0.32%', volume: '34K', trend: 'up' },
+      { symbol: 'Platinum', price: '978.30', change: '-0.08%', volume: '8K', trend: 'down' }
     ],
     indices: [
-      { symbol: 'FTSE 100', price: '7,485', change: '+0.89%', volume: '2.3B', trend: 'up' },
-      { symbol: 'S&P 500', price: '4,785', change: '+0.67%', volume: '3.1B', trend: 'up' },
-      { symbol: 'NASDAQ', price: '15,234', change: '+1.23%', volume: '2.8B', trend: 'up' },
-      { symbol: 'DAX', price: '16,789', change: '+0.45%', volume: '1.9B', trend: 'up' },
-      { symbol: 'Nikkei 225', price: '32,456', change: '+0.78%', volume: '1.2B', trend: 'up' },
-      { symbol: 'ASX 200', price: '7,123', change: '+0.34%', volume: '890M', trend: 'up' }
+      { symbol: 'FTSE 100', price: '8,237', change: '+0.54%', volume: '2.3B', trend: 'up' },
+      { symbol: 'S&P 500', price: '5,234', change: '+0.65%', volume: '3.1B', trend: 'up' },
+      { symbol: 'NASDAQ', price: '16,428', change: '+0.87%', volume: '2.8B', trend: 'up' },
+      { symbol: 'DAX', price: '18,236', change: '+0.32%', volume: '1.9B', trend: 'up' },
+      { symbol: 'Nikkei 225', price: '38,642', change: '+0.45%', volume: '1.2B', trend: 'up' },
+      { symbol: 'ASX 200', price: '7,756', change: '+0.21%', volume: '890M', trend: 'up' }
     ],
     crypto: [
-      { symbol: 'BTC/USD', price: '42,150', change: '+2.34%', volume: '12.5B', trend: 'up' },
-      { symbol: 'ETH/USD', price: '2,250', change: '+3.45%', volume: '8.9B', trend: 'up' },
-      { symbol: 'ADA/USD', price: '0.45', change: '+5.67%', volume: '2.1B', trend: 'up' },
-      { symbol: 'SOL/USD', price: '98.75', change: '+4.23%', volume: '1.8B', trend: 'up' },
-      { symbol: 'DOT/USD', price: '6.78', change: '+2.89%', volume: '890M', trend: 'up' },
-      { symbol: 'LINK/USD', price: '14.56', change: '+1.67%', volume: '1.2B', trend: 'up' }
+      { symbol: 'BTC/USD', price: '67,245', change: '+1.87%', volume: '12.5B', trend: 'up' },
+      { symbol: 'ETH/USD', price: '3,542', change: '+2.13%', volume: '8.9B', trend: 'up' },
+      { symbol: 'ADA/USD', price: '0.42', change: '+3.24%', volume: '2.1B', trend: 'up' },
+      { symbol: 'SOL/USD', price: '142.65', change: '+2.76%', volume: '1.8B', trend: 'up' },
+      { symbol: 'DOT/USD', price: '5.87', change: '+1.54%', volume: '890M', trend: 'up' },
+      { symbol: 'LINK/USD', price: '16.23', change: '+0.98%', volume: '1.2B', trend: 'up' }
     ]
   });
 
@@ -91,42 +91,42 @@ const MarketAnalysis = () => {
     {
       time: '09:30',
       currency: 'GBP',
-      event: 'UK GDP Growth Rate',
+      event: 'UK Retail Sales',
+      impact: 'high',
+      forecast: '0.3%',
+      previous: '0.2%'
+    },
+    {
+      time: '13:30',
+      currency: 'USD',
+      event: 'US Core PCE Price Index',
       impact: 'high',
       forecast: '0.2%',
-      previous: '0.1%'
+      previous: '0.3%'
     },
     {
-      time: '14:30',
-      currency: 'USD',
-      event: 'US Non-Farm Payrolls',
-      impact: 'high',
-      forecast: '180K',
-      previous: '175K'
-    },
-    {
-      time: '15:45',
+      time: '14:45',
       currency: 'EUR',
-      event: 'ECB Interest Rate Decision',
+      event: 'ECB President Lagarde Speech',
       impact: 'high',
-      forecast: '4.50%',
-      previous: '4.50%'
-    },
-    {
-      time: '16:00',
-      currency: 'USD',
-      event: 'Federal Reserve Speech',
-      impact: 'medium',
       forecast: '-',
       previous: '-'
+    },
+    {
+      time: '15:00',
+      currency: 'USD',
+      event: 'US Consumer Sentiment',
+      impact: 'medium',
+      forecast: '72.5',
+      previous: '71.8'
     }
   ];
 
   const marketSentiment = {
-    forex: { bullish: 65, bearish: 35 },
-    commodities: { bullish: 72, bearish: 28 },
-    indices: { bullish: 78, bearish: 22 },
-    crypto: { bullish: 68, bearish: 32 }
+    forex: { bullish: 58, bearish: 42 },
+    commodities: { bullish: 65, bearish: 35 },
+    indices: { bullish: 72, bearish: 28 },
+    crypto: { bullish: 63, bearish: 37 }
   };
 
   useEffect(() => {
@@ -147,11 +147,11 @@ const MarketAnalysis = () => {
             // Format the price based on the symbol
             let formattedPrice;
             if (item.symbol === "BTC/USD" || item.symbol === "ETH/USD") {
-              formattedPrice = newPrice.toFixed(0);
+              formattedPrice = Math.round(newPrice).toLocaleString();
             } else if (item.symbol.includes("FTSE") || item.symbol.includes("S&P") || 
                       item.symbol.includes("NASDAQ") || item.symbol.includes("DAX") || 
                       item.symbol.includes("Nikkei") || item.symbol.includes("ASX")) {
-              formattedPrice = newPrice.toFixed(0);
+              formattedPrice = Math.round(newPrice).toLocaleString();
             } else if (item.symbol === "Gold" || item.symbol === "Silver" || 
                       item.symbol === "Oil" || item.symbol === "Platinum") {
               formattedPrice = newPrice.toFixed(2);
