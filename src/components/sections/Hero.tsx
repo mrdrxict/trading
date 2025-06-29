@@ -113,8 +113,8 @@ const Hero = () => {
                 <span className="text-white text-sm font-medium">Gary Robinson Trading Platform</span>
               </div>
               <img 
-                src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                alt="Trading Platform" 
+                src="/images/gary.png" 
+                alt="Gary Robinson" 
                 className="w-full h-auto"
               />
             </div>
