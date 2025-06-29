@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, Calendar, User, ArrowRight, Share2, BookOpen, TrendingUp, MessageCircle, Heart, Eye } from 'lucide-react';
+import { Search, Filter, Calendar, User, ArrowRight, Share2, BookOpen, TrendingUp, Eye } from 'lucide-react';
 import Button from '../components/ui/Button';
 import { Link } from 'react-router-dom';
 
@@ -27,8 +27,6 @@ const Blog = () => {
       readTime: "12 min read",
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       views: 2847,
-      likes: 156,
-      comments: 23,
       featured: true
     },
     {
@@ -41,8 +39,6 @@ const Blog = () => {
       readTime: "8 min read",
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       views: 1923,
-      likes: 89,
-      comments: 15,
       featured: true
     }
   ];
@@ -57,9 +53,7 @@ const Blog = () => {
       category: "Trading Psychology",
       readTime: "6 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      views: 1654,
-      likes: 78,
-      comments: 12
+      views: 1654
     },
     {
       id: 4,
@@ -70,9 +64,7 @@ const Blog = () => {
       category: "Futures",
       readTime: "10 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      views: 1432,
-      likes: 65,
-      comments: 8
+      views: 1432
     },
     {
       id: 5,
@@ -83,9 +75,7 @@ const Blog = () => {
       category: "Market Analysis",
       readTime: "7 min read",
       image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      views: 2156,
-      likes: 134,
-      comments: 19
+      views: 2156
     },
     {
       id: 6,
@@ -96,9 +86,7 @@ const Blog = () => {
       category: "Trading Psychology",
       readTime: "9 min read",
       image: "https://images.pexels.com/photos/7821906/pexels-photo-7821906.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      views: 1876,
-      likes: 98,
-      comments: 25
+      views: 1876
     },
     {
       id: 7,
@@ -109,9 +97,7 @@ const Blog = () => {
       category: "Cryptocurrency",
       readTime: "11 min read",
       image: "https://images.pexels.com/photos/6781341/pexels-photo-6781341.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      views: 1543,
-      likes: 72,
-      comments: 14
+      views: 1543
     },
     {
       id: 8,
@@ -122,9 +108,7 @@ const Blog = () => {
       category: "Futures",
       readTime: "8 min read",
       image: "https://images.pexels.com/photos/8370752/pexels-photo-8370752.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      views: 1234,
-      likes: 56,
-      comments: 9
+      views: 1234
     }
   ];
 
@@ -166,14 +150,14 @@ const Blog = () => {
               <p className="text-gray-200">Monthly Readers</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
-              <MessageCircle className="text-yellow-500 mx-auto mb-3" size={32} />
-              <div className="text-2xl font-bold text-yellow-500 mb-2">500+</div>
-              <p className="text-gray-200">Comments & Discussions</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
               <TrendingUp className="text-yellow-500 mx-auto mb-3" size={32} />
               <div className="text-2xl font-bold text-yellow-500 mb-2">Weekly</div>
               <p className="text-gray-200">New Content</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center">
+              <BookOpen className="text-yellow-500 mx-auto mb-3" size={32} />
+              <div className="text-2xl font-bold text-yellow-500 mb-2">Expert</div>
+              <p className="text-gray-200">Analysis</p>
             </div>
           </div>
         </div>
@@ -235,14 +219,6 @@ const Blog = () => {
                       <div className="flex items-center">
                         <Eye className="mr-1" size={14} />
                         {post.views}
-                      </div>
-                      <div className="flex items-center">
-                        <Heart className="mr-1" size={14} />
-                        {post.likes}
-                      </div>
-                      <div className="flex items-center">
-                        <MessageCircle className="mr-1" size={14} />
-                        {post.comments}
                       </div>
                     </div>
                     <Link to={`/blog/${post.id}`} className="flex items-center text-blue-900 font-medium hover:text-blue-700 transition-colors">
@@ -338,14 +314,6 @@ const Blog = () => {
                       <div className="flex items-center">
                         <Eye className="mr-1" size={12} />
                         {post.views}
-                      </div>
-                      <div className="flex items-center">
-                        <Heart className="mr-1" size={12} />
-                        {post.likes}
-                      </div>
-                      <div className="flex items-center">
-                        <MessageCircle className="mr-1" size={12} />
-                        {post.comments}
                       </div>
                     </div>
                     <Link to={`/blog/${post.id}`} className="text-blue-900 hover:text-blue-700 transition-colors">
