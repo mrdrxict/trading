@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft, Eye, Share2, Bookmark, Printer, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Eye, Share2, Bookmark, Printer, Facebook, Twitter, Linkedin, ArrowRight } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 const BlogPost = () => {
