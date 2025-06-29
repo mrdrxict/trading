@@ -3,6 +3,7 @@ import { Calendar, Clock, User, CreditCard, CheckCircle, ArrowLeft, ArrowRight, 
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
+import PaymentModal from '../components/payment/PaymentModal';
 
 const Booking = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -18,6 +19,8 @@ const Booking = () => {
     goals: '',
     message: ''
   });
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const services = [
     {
@@ -133,8 +136,33 @@ const Booking = () => {
   };
 
   const handleSubmit = () => {
-    // Handle booking submission
-    alert('Booking submitted successfully! You will receive a confirmation email shortly.');
+    // For paid sessions, open payment modal
+    const selectedServiceData = services.find(s => s.id === selectedService);
+    
+    if (selectedServiceData && selectedServiceData.price !== 'Free') {
+      // Extract price as a number
+      const priceValue = parseInt(selectedServiceData.price.replace('£', ''));
+      
+      setSelectedProduct({
+        id: selectedServiceData.id,
+        name: selectedServiceData.name,
+        price: priceValue,
+        description: `${selectedServiceData.duration} ${selectedServiceData.type} session on ${new Date(selectedDate).toLocaleDateString()} at ${selectedTime} ${selectedTimezone}`,
+        type: 'consultation'
+      });
+      
+      setIsPaymentModalOpen(true);
+    } else {
+      // For free consultations, just show confirmation
+      alert('Booking submitted successfully! You will receive a confirmation email shortly.');
+    }
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
+    // Show success message after payment
+    alert('Booking confirmed! You will receive a confirmation email with all details shortly.');
   };
 
   const selectedServiceData = services.find(s => s.id === selectedService);
@@ -517,6 +545,13 @@ const Booking = () => {
           </div>
         </div>
       </section>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </div>
   );
 };
