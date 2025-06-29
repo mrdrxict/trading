@@ -25,9 +25,9 @@ const Booking = () => {
   const services = [
     {
       id: 'consultation',
-      name: 'Free Strategy Consultation',
+      name: 'Strategy Consultation',
       duration: '30 minutes',
-      price: 'Free',
+      price: '$50',
       description: 'Discuss your trading goals and get personalized recommendations',
       type: 'video'
     },
@@ -139,9 +139,9 @@ const Booking = () => {
     // For paid sessions, open payment modal
     const selectedServiceData = services.find(s => s.id === selectedService);
     
-    if (selectedServiceData && selectedServiceData.price !== 'Free') {
+    if (selectedServiceData) {
       // Extract price as a number
-      const priceValue = parseInt(selectedServiceData.price.replace('£', ''));
+      const priceValue = parseInt(selectedServiceData.price.replace(/[^0-9]/g, ''));
       
       setSelectedProduct({
         id: selectedServiceData.id,
@@ -152,9 +152,6 @@ const Booking = () => {
       });
       
       setIsPaymentModalOpen(true);
-    } else {
-      // For free consultations, just show confirmation
-      alert('Booking submitted successfully! You will receive a confirmation email shortly.');
     }
   };
 
@@ -469,14 +466,12 @@ const Booking = () => {
                     </ul>
                   </div>
 
-                  {selectedServiceData?.price !== 'Free' && (
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                      <div className="flex items-center">
-                        <CreditCard className="text-yellow-600 mr-2" size={20} />
-                        <span className="font-medium text-yellow-800">Payment will be processed after confirmation</span>
-                      </div>
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                    <div className="flex items-center">
+                      <CreditCard className="text-yellow-600 mr-2" size={20} />
+                      <span className="font-medium text-yellow-800">Payment will be processed after confirmation</span>
                     </div>
-                  )}
+                  </div>
                 </div>
               )}
 

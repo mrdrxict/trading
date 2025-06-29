@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
+import PaymentModal from '../payment/PaymentModal';
 
 const BookingForm = () => {
   const [formState, setFormState] = useState({
@@ -16,6 +17,8 @@ const BookingForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -83,22 +86,34 @@ const BookingForm = () => {
     e.preventDefault();
     
     if (validateForm()) {
-      setIsSubmitting(true);
+      // Set up payment modal with consultation product
+      setSelectedProduct({
+        id: 'strategy-consultation',
+        name: 'Strategy Consultation',
+        price: 50,
+        description: '30-minute consultation to discuss your trading goals and create a personalized plan',
+        type: 'consultation'
+      });
       
-      // Simulate form submission
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSuccess(true);
-        setFormState({
-          name: '',
-          email: '',
-          phone: '',
-          experience: '',
-          goal: '',
-          message: '',
-        });
-      }, 1500);
+      setIsPaymentModalOpen(true);
     }
+  };
+
+  const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedProduct(null);
+    
+    // Show success message after payment
+    setIsSubmitting(false);
+    setIsSuccess(true);
+    setFormState({
+      name: '',
+      email: '',
+      phone: '',
+      experience: '',
+      goal: '',
+      message: '',
+    });
   };
 
   const experienceOptions = [
@@ -123,7 +138,7 @@ const BookingForm = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Book Your Free Strategy Session
+            Book Your Strategy Session
           </h2>
           <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
           <p className="text-gray-200 max-w-3xl mx-auto text-lg">
@@ -146,7 +161,7 @@ const BookingForm = () => {
           ) : (
             <form onSubmit={handleSubmit} className="bg-white text-gray-700 rounded-xl p-8 shadow-xl">
               <h3 className="text-xl font-bold text-blue-900 mb-6">
-                Personal Information
+                Book Your $50 Strategy Session
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -228,7 +243,7 @@ const BookingForm = () => {
                 className="py-3 text-lg"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Submitting...' : 'Book Your Free Strategy Session'}
+                {isSubmitting ? 'Processing...' : 'Book Your $50 Strategy Session'}
               </Button>
               
               <p className="text-gray-500 text-sm text-center mt-4">
@@ -238,6 +253,13 @@ const BookingForm = () => {
           )}
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal 
+        isOpen={isPaymentModalOpen} 
+        onClose={handleClosePaymentModal} 
+        product={selectedProduct} 
+      />
     </section>
   );
 };
